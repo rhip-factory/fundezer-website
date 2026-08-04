@@ -59,7 +59,8 @@ function Apply() {
   const outsideAbuja = state !== "Abuja (FCT)";
 
   function generateStory() {
-    const [illness, when, who, before, effect, why, delay] = answers;
+    const [illness = "", when = "", who = "", before = "", effect = "", why = "", delay = ""] =
+      answers;
     if (!illness.trim()) {
       toast.error("Tell us what illness you have first.");
       return;
@@ -182,13 +183,15 @@ function Apply() {
               <h2 className="font-display text-xl font-semibold text-foreground sm:col-span-2">
                 Patient registration
               </h2>
-              {[
-                ["Full name", "text"],
-                ["Email", "email"],
-                ["Phone", "tel"],
-                ["NIN", "text"],
-                ["Date of birth", "date"],
-              ].map(([label, type]) => (
+              {(
+                [
+                  ["Full name", "text"],
+                  ["Email", "email"],
+                  ["Phone", "tel"],
+                  ["NIN", "text"],
+                  ["Date of birth", "date"],
+                ] as [string, string][]
+              ).map(([label, type]) => (
                 <label key={label} className="block">
                   <Label>{label}</Label>
                   <input type={type} className={field} />
