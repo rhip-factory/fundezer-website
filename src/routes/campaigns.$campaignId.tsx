@@ -44,7 +44,8 @@ export const Route = createFileRoute("/campaigns/$campaignId")({
 const presets = [5000, 10000, 25000, 100000];
 
 function CampaignDetail() {
-  const { campaign } = Route.useLoaderData();
+  const { campaignId } = Route.useParams();
+  const campaign = campaigns.find((c) => c.id === campaignId) as Campaign;
   const [amount, setAmount] = useState(10000);
   const [method, setMethod] = useState("card");
   const pct = Math.round((campaign.raised / campaign.goal) * 100);
