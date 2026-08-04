@@ -78,16 +78,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "FundEzer — Healthcare crowdfunding paid to hospitals" },
+      { title: "FundEzer — Healthcare crowdfunding paid straight to hospitals" },
       {
         name: "description",
         content:
-          "FundEzer connects patients with donors through verified Abuja hospitals. Donations are paid directly to hospitals, never to individuals.",
+          "Fund verified patient treatments in Abuja. Every donation goes directly to the partner hospital, tracked in real time. Help from all.",
       },
       { name: "author", content: "FundEzer" },
       { property: "og:site_name", content: "FundEzer" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "FundEzer — Healthcare crowdfunding paid straight to hospitals" },
+      { name: "twitter:title", content: "FundEzer — Healthcare crowdfunding paid straight to hospitals" },
+      { property: "og:description", content: "Fund verified patient treatments in Abuja. Every donation goes directly to the partner hospital, tracked in real time. Help from all." },
+      { name: "twitter:description", content: "Fund verified patient treatments in Abuja. Every donation goes directly to the partner hospital, tracked in real time. Help from all." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/08024160-e703-4bf1-9e20-9240c6e32fb3/id-preview-2b5f671d--b9d8b3bc-4bc3-4994-a00a-01fd86111bab.lovable.app-1785834087514.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/08024160-e703-4bf1-9e20-9240c6e32fb3/id-preview-2b5f671d--b9d8b3bc-4bc3-4994-a00a-01fd86111bab.lovable.app-1785834087514.png" },
     ],
     links: [
       {

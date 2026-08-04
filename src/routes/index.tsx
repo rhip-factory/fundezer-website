@@ -23,11 +23,11 @@ export const Route = createFileRoute("/")({
         content:
           "Fund verified patient treatments in Abuja. Every donation goes directly to the partner hospital, tracked in real time. Help from all.",
       },
-      { property: "og:title", content: "FundEzer — Help From All" },
+      { property: "og:title", content: "FundEzer — Healthcare crowdfunding paid straight to hospitals" },
       {
         property: "og:description",
         content:
-          "AI-verified healthcare crowdfunding where donations are paid directly to verified hospitals.",
+          "Fund verified patient treatments in Abuja. Every donation goes directly to the partner hospital, tracked in real time. Help from all.",
       },
       { property: "og:url", content: "/" },
     ],
