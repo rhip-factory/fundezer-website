@@ -14,9 +14,9 @@ export function ProgressBar({ value }: { value: number }) {
 }
 
 const urgencyStyle: Record<Campaign["urgency"], string> = {
-  Critical: "bg-destructive/10 text-destructive",
-  Urgent: "bg-warning/15 text-warning",
-  Scheduled: "bg-secondary text-secondary-foreground",
+  Critical: "text-destructive",
+  Urgent: "text-warning",
+  Scheduled: "text-secondary-foreground",
 };
 
 export function CampaignCard({ campaign }: { campaign: Campaign }) {
