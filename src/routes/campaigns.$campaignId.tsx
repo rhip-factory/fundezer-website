@@ -12,10 +12,10 @@ import {
 } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { ProgressBar } from "@/components/site/CampaignCard";
-import { campaigns, formatNaira, formatShort } from "@/lib/data";
+import { campaigns, formatNaira, formatShort, type Campaign } from "@/lib/data";
 
 export const Route = createFileRoute("/campaigns/$campaignId")({
-  loader: ({ params }) => {
+  loader: ({ params }): { campaign: Campaign } => {
     const campaign = campaigns.find((c) => c.id === params.campaignId);
     if (!campaign) throw notFound();
     return { campaign };
