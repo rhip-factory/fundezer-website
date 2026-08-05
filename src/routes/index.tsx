@@ -38,8 +38,8 @@ export const Route = createFileRoute("/")({
 const pillars = [
   {
     icon: ShieldCheck,
-    title: "Funds never touch cash",
-    body: "Donations are paid directly to the verified hospital treating the patient — never to an individual's account.",
+    title: "Funds never touch individual accounts",
+    body: "Donations are paid directly to the verified hospital treating the patient never to an individual's account.",
   },
   {
     icon: Building2,
@@ -76,7 +76,7 @@ function Index() {
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
               FundEzer connects financially challenged patients with donors through verified
-              hospital partnerships. Every naira you give is paid straight to the hospital —
+              hospital partnerships. Every naira you give is paid straight to the hospital;
               transparent, milestone-based, fraud-resistant.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -193,7 +193,7 @@ function Index() {
         <ol className="mt-12 grid gap-6 md:grid-cols-3">
           {[
             ["Patient applies", "Select Abuja and a partner hospital, register, and answer guided questions."],
-            ["AI builds the story", "Answers become a clear 200-word story the patient reviews and edits."],
+            ["AI helps build the story", "Answers become a clear 200-word story the patient reviews and edits."],
             ["Hospital assesses", "Doctors add the diagnosis, plan and minimum/maximum cost estimate."],
             ["Goal recommended", "FundEzer suggests a target around 20% above the maximum estimate."],
             ["Campaign goes live", "After fraud screening and hospital approval, the campaign publishes."],

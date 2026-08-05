@@ -144,7 +144,7 @@ function Apply() {
     <PageShell>
       <PageHero
         eyebrow="Apply for sponsorship"
-        title="A guided application, reviewed by your hospital"
+        title="A guided campaign setup, reviewed by your hospital"
         description="This is a demonstration of the FundEzer patient journey. Nothing is stored and no documents are uploaded in this preview."
       />
 
