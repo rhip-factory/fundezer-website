@@ -40,9 +40,8 @@ const tracks = [
       ["Receive the application", "Your reviewer is notified and opens the patient story, medical reports, identity documents and images."],
       ["Complete the assessment", "Record diagnosis, recommended investigations and procedure, expected admission, urgency and expected recovery."],
       ["Submit cost estimate", "Enter minimum and maximum costs for labs, imaging, medication, procedure, consumables, physiotherapy and other items."],
-      ["Review the AI treatment plan", "The system drafts a diagnosis summary, investigations, timeline, medication schedule and milestones for your approval."],
-      ["Approve the recommended goal", "FundEzer recommends a target around 20% above your maximum estimate. Approve it, or reject with a reason."],
-      ["Update treatment and get paid", "Post progress, upload images and receive payments against completed treatment milestones."],
+      ["Review the treatment plan", "The system drafts a diagnosis summary, investigations, timeline, medication schedule and milestones for your approval."],
+      ["Campaign goes live", "Once you approve the recommended goal and fraud screening clears, the campaign publishes and you are paid against completed treatment milestones."],
     ],
   },
   {
@@ -51,7 +50,7 @@ const tracks = [
       ["Browse verified campaigns", "Search by hospital, condition, location or amount needed. Every listing carries a hospital verified badge."],
       ["Give with card or transfer", "Choose an amount and pay securely. Mobile wallet payments arrive in a later phase."],
       ["Get your receipt", "You receive a receipt and a thank-you message immediately after donating."],
-      ["Follow the treatment", "Hospitals post treatment updates and progress images so you see exactly what your money did."],
+      ["Follow Updates", "Hospitals post treatment updates and progress images so you see exactly what your money did."],
     ],
   },
 ];
