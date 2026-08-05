@@ -26,7 +26,25 @@ export const Route = createFileRoute("/apply")({
   }),
 });
 
-const steps = ["Location", "Hospital", "Your details", "Medical story", "Documents", "Submit"];
+const steps = [
+  "Create account",
+  "Location",
+  "Hospital",
+  "Your details",
+  "Medical story",
+  "Documents",
+  "Submit",
+];
+
+const contactRelationships = [
+  "Spouse",
+  "Parent",
+  "Child",
+  "Sibling",
+  "Other relative",
+  "Friend",
+  "Guardian",
+];
 
 const storyQuestions = [
   "What illness do you have?",
@@ -55,8 +73,34 @@ function Apply() {
   const [answers, setAnswers] = useState<string[]>(Array(storyQuestions.length).fill(""));
   const [story, setStory] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [account, setAccount] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirm: "",
+  });
+  const [accountCreated, setAccountCreated] = useState(false);
 
   const outsideAbuja = state !== "Abuja (FCT)";
+
+  function createAccount() {
+    const { fullName, email, phone, password, confirm } = account;
+    if (!fullName.trim() || !email.trim() || !phone.trim()) {
+      toast.error("Enter your name, email and phone number to create an account.");
+      return;
+    }
+    if (password.length < 8) {
+      toast.error("Your password must be at least 8 characters.");
+      return;
+    }
+    if (password !== confirm) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+    setAccountCreated(true);
+    toast.success("Account created — you can now continue your campaign.");
+  }
 
   function generateStory() {
     const [illness = "", when = "", who = "", before = "", effect = "", why = "", delay = ""] =
