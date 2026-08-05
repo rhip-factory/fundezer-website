@@ -68,8 +68,8 @@ function BrowseCampaigns() {
     <PageShell>
       <PageHero
         eyebrow="Browse campaigns"
-        title="Every campaign here has been verified by a hospital"
-        description="Search by patient, condition, hospital or location. Your donation is paid to the hospital treating the patient — never into a personal account."
+        title="Verified hospitals validate every case and receive every donation"
+        description="Search by patient, condition, hospital or location. Your donation is paid to the hospital treating the patient, never into a personal account."
       />
 
       <section className="container-page py-12">

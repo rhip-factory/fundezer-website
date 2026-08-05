@@ -90,7 +90,7 @@ function Index() {
                 to="/apply"
                 className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-card px-6 py-3.5 text-sm font-semibold text-primary transition-colors hover:bg-primary-soft"
               >
-                Apply for sponsorship
+                Start a Campaign
               </Link>
             </div>
 

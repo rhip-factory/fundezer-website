@@ -42,7 +42,7 @@ export function Header() {
             to="/apply"
             className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
           >
-            Apply for sponsorship
+            Start a Campaign
           </Link>
         </div>
 
@@ -81,7 +81,7 @@ export function Header() {
               onClick={() => setOpen(false)}
               className="mt-2 rounded-full bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground"
             >
-              Apply for sponsorship
+              Start a Campaign
             </Link>
           </div>
         </div>

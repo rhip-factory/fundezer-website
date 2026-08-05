@@ -29,7 +29,7 @@ function Hospitals() {
     <PageShell>
       <PageHero
         eyebrow="Partner hospitals"
-        title="Verified hospitals validate every case and receive every naira"
+        title="Africa's trusted healthcare financing platform"
         description="Hospitals complete licensing, facility and finance verification before they can review applications or receive payments on FundEzer."
       />
 

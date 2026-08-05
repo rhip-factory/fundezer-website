@@ -7,7 +7,7 @@ const columns = [
     links: [
       { to: "/campaigns", label: "Browse campaigns" },
       { to: "/how-it-works", label: "How it works" },
-      { to: "/apply", label: "Apply for sponsorship" },
+      { to: "/apply", label: "Start a Campaign" },
       { to: "/hospitals", label: "Partner hospitals" },
     ],
   },
@@ -39,7 +39,7 @@ export function Footer() {
           <Logo />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
             Africa's trust-first healthcare crowdfunding platform. Donations are paid directly to
-            verified hospitals — never to individuals.
+            verified hospitals, never to individuals.
           </p>
           <p className="mt-4 text-xs font-medium uppercase tracking-widest text-primary">
             Abuja pilot · Nigeria
