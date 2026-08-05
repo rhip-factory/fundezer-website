@@ -76,7 +76,7 @@ function Index() {
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
               FundEzer connects financially challenged patients with donors through verified
-              hospital partnerships. Every naira you give is paid straight to the hospital,
+              hospital partnerships. Every naira you give is paid straight to the hospital;
               transparent, milestone-based, fraud-resistant.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
