@@ -26,7 +26,25 @@ export const Route = createFileRoute("/apply")({
   }),
 });
 
-const steps = ["Location", "Hospital", "Your details", "Medical story", "Documents", "Submit"];
+const steps = [
+  "Create account",
+  "Location",
+  "Hospital",
+  "Your details",
+  "Medical story",
+  "Documents",
+  "Submit",
+];
+
+const contactRelationships = [
+  "Spouse",
+  "Parent",
+  "Child",
+  "Sibling",
+  "Other relative",
+  "Friend",
+  "Guardian",
+];
 
 const storyQuestions = [
   "What illness do you have?",
@@ -55,8 +73,34 @@ function Apply() {
   const [answers, setAnswers] = useState<string[]>(Array(storyQuestions.length).fill(""));
   const [story, setStory] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [account, setAccount] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirm: "",
+  });
+  const [accountCreated, setAccountCreated] = useState(false);
 
   const outsideAbuja = state !== "Abuja (FCT)";
+
+  function createAccount() {
+    const { fullName, email, phone, password, confirm } = account;
+    if (!fullName.trim() || !email.trim() || !phone.trim()) {
+      toast.error("Enter your name, email and phone number to create an account.");
+      return;
+    }
+    if (password.length < 8) {
+      toast.error("Your password must be at least 8 characters.");
+      return;
+    }
+    if (password !== confirm) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+    setAccountCreated(true);
+    toast.success("Account created — you can now continue your campaign.");
+  }
 
   function generateStory() {
     const [illness = "", when = "", who = "", before = "", effect = "", why = "", delay = ""] =
@@ -126,6 +170,78 @@ function Apply() {
           {step === 0 && (
             <div className="space-y-5">
               <h2 className="font-display text-xl font-semibold text-foreground">
+                Create your account
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                You must sign up before you can create a campaign. Your account lets you save your
+                application, track hospital review and follow funds raised.
+              </p>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <label className="block">
+                  <Label>Full name</Label>
+                  <input
+                    type="text"
+                    value={account.fullName}
+                    onChange={(e) => setAccount({ ...account, fullName: e.target.value })}
+                    className={field}
+                  />
+                </label>
+                <label className="block">
+                  <Label>Email</Label>
+                  <input
+                    type="email"
+                    value={account.email}
+                    onChange={(e) => setAccount({ ...account, email: e.target.value })}
+                    className={field}
+                  />
+                </label>
+                <label className="block">
+                  <Label>Phone number</Label>
+                  <input
+                    type="tel"
+                    value={account.phone}
+                    onChange={(e) => setAccount({ ...account, phone: e.target.value })}
+                    className={field}
+                  />
+                </label>
+                <label className="block">
+                  <Label>Password</Label>
+                  <input
+                    type="password"
+                    value={account.password}
+                    onChange={(e) => setAccount({ ...account, password: e.target.value })}
+                    className={field}
+                  />
+                </label>
+                <label className="block sm:col-span-2">
+                  <Label>Confirm password</Label>
+                  <input
+                    type="password"
+                    value={account.confirm}
+                    onChange={(e) => setAccount({ ...account, confirm: e.target.value })}
+                    className={field}
+                  />
+                </label>
+              </div>
+              {accountCreated ? (
+                <p className="inline-flex items-center gap-2 rounded-xl bg-primary-soft px-4 py-3 text-sm font-semibold text-primary-deep">
+                  <Check className="h-4 w-4" /> Account created. Continue to your campaign.
+                </p>
+              ) : (
+                <button
+                  type="button"
+                  onClick={createAccount}
+                  className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
+                >
+                  Sign up and continue
+                </button>
+              )}
+            </div>
+          )}
+
+          {step === 1 && (
+            <div className="space-y-5">
+              <h2 className="font-display text-xl font-semibold text-foreground">
                 Where will you be treated?
               </h2>
               <label className="block">
@@ -153,7 +269,7 @@ function Apply() {
             </div>
           )}
 
-          {step === 1 && (
+          {step === 2 && (
             <div className="space-y-5">
               <h2 className="font-display text-xl font-semibold text-foreground">
                 Select your hospital
@@ -178,7 +294,7 @@ function Apply() {
             </div>
           )}
 
-          {step === 2 && (
+          {step === 3 && (
             <div className="grid gap-5 sm:grid-cols-2">
               <h2 className="font-display text-xl font-semibold text-foreground sm:col-span-2">
                 Patient registration
@@ -209,18 +325,37 @@ function Apply() {
                 <Label>Residential address</Label>
                 <input type="text" className={field} />
               </label>
-              <label className="block">
-                <Label>Emergency contact</Label>
-                <input type="text" className={field} />
-              </label>
-              <label className="block">
-                <Label>Next of kin</Label>
-                <input type="text" className={field} />
-              </label>
+
+              {(["Next of kin", "Emergency contact"] as const).map((group) => (
+                <div key={group} className="sm:col-span-2">
+                  <h3 className="font-display text-base font-semibold text-foreground">{group}</h3>
+                  <div className="mt-3 grid gap-5 sm:grid-cols-3">
+                    <label className="block">
+                      <Label>Relationship</Label>
+                      <select className={field} defaultValue="">
+                        <option value="" disabled>
+                          Select relationship
+                        </option>
+                        {contactRelationships.map((r) => (
+                          <option key={r}>{r}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label className="block">
+                      <Label>Name</Label>
+                      <input type="text" required className={field} />
+                    </label>
+                    <label className="block">
+                      <Label>Phone number</Label>
+                      <input type="tel" required className={field} />
+                    </label>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 
-          {step === 3 && (
+          {step === 4 && (
             <div className="space-y-5">
               <h2 className="font-display text-xl font-semibold text-foreground">
                 Your medical story
@@ -268,7 +403,7 @@ function Apply() {
             </div>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <div className="space-y-6">
               <h2 className="font-display text-xl font-semibold text-foreground">
                 Upload your documents
@@ -298,7 +433,7 @@ function Apply() {
             </div>
           )}
 
-          {step === 5 && (
+          {step === 6 && (
             <div className="space-y-5">
               <h2 className="font-display text-xl font-semibold text-foreground">
                 Review and submit
@@ -344,7 +479,12 @@ function Apply() {
             </button>
             <button
               type="button"
-              disabled={step === steps.length - 1 || (step === 0 && outsideAbuja) || (step === 1 && !hospital)}
+              disabled={
+                step === steps.length - 1 ||
+                (step === 0 && !accountCreated) ||
+                (step === 1 && outsideAbuja) ||
+                (step === 2 && !hospital)
+              }
               onClick={() => setStep((s) => s + 1)}
               className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-40"
             >
