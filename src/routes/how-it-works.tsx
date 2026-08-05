@@ -28,7 +28,7 @@ const tracks = [
     steps: [
       ["Choose location and hospital", "Select Nigeria and Abuja, then pick one of our verified partner hospitals. Other states open as we onboard more hospitals."],
       ["Register securely", "Provide your name, contact details, NIN, date of birth, address, emergency contact and next of kin."],
-      ["Answer guided questions", "Instead of 'tell your story', our AI asks what your illness is, when it was diagnosed, who diagnosed it and how it affects your life."],
+      ["Answer guided questions", "Our AI asks clarifying questions which it uses to help you write a compelling story.\u00a0"],
       ["Review your story", "The AI writes a clear, dignified story of up to 200 words that you can edit before submitting."],
       ["Upload documents", "Diagnosis, lab reports, prescriptions, scans, pictures and a government ID. Videos and referral letters are optional."],
       ["Submit and track", "Your application is sent to the hospital. Track status, funds raised and treatment progress from your dashboard."],
@@ -39,7 +39,7 @@ const tracks = [
     steps: [
       ["Receive the application", "Your reviewer is notified and opens the patient story, medical reports, identity documents and images."],
       ["Complete the assessment", "Record diagnosis, recommended investigations and procedure, expected admission, urgency and expected recovery."],
-      ["Submit cost estimate", "Enter minimum and maximum costs for labs, imaging, medication, procedure, consumables, physiotherapy and other items."],
+      ["Submit cost estimate", "Enter minimum and maximum costs for preliminary diagnostics, recommended investigation, recommended procedure and other items."],
       ["Review the treatment plan", "The system drafts a diagnosis summary, investigations, timeline, medication schedule and milestones for your approval."],
       ["Campaign goes live", "Once you approve the recommended goal and fraud screening clears, the campaign publishes and you are paid against completed treatment milestones."],
     ],
@@ -49,7 +49,7 @@ const tracks = [
     steps: [
       ["Browse verified campaigns", "Search by hospital, condition, location or amount needed. Every listing carries a hospital verified badge."],
       ["Give with card or transfer", "Choose an amount and pay securely. Mobile wallet payments arrive in a later phase."],
-      ["Get your receipt", "You receive a receipt and a thank-you message immediately after donating."],
+      ["Get your receipt", "You receive a receipt and a thank you message immediately after donating."],
       ["Follow Updates", "Hospitals post treatment updates and progress images so you see exactly what your money did."],
     ],
   },
