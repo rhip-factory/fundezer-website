@@ -36,9 +36,9 @@ function Contact() {
       <section className="container-page grid gap-10 py-16 lg:grid-cols-[1fr_1.2fr]">
         <div className="space-y-5">
           {[
-            [Mail, "Email", "hello@fundezer.com"],
-            [Phone, "Phone", "+234 800 000 0000"],
-            [MapPin, "Office", "Central Business District, Abuja, Nigeria"],
+            [Mail, "Email", "hello@fundezer.org"],
+            [Phone, "Phone", "+234 808 888 8306"],
+            [MapPin, "Office", "Plot 78 Step One, Aso Garden Karsana, Abuja, Nigeria"],
           ].map(([Icon, label, value]) => {
             const I = Icon as typeof Mail;
             return (
