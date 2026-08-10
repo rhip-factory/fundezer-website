@@ -90,6 +90,16 @@ function Apply() {
       toast.error("Enter your name, email and phone number to create an account.");
       return;
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    const phoneRegex = /^(\+?234|0)[7-9][0-1]\d{8}$/;
+    if (!phoneRegex.test(phone.trim().replace(/\s/g, ""))) {
+      toast.error("Please enter a valid Nigerian phone number (e.g. 0808 888 8306).");
+      return;
+    }
     if (password.length < 8) {
       toast.error("Your password must be at least 8 characters.");
       return;
