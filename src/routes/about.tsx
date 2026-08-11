@@ -5,13 +5,13 @@ export const Route = createFileRoute("/about")({
   component: About,
   head: () => ({
     meta: [
-      { title: "About FundEzer — Africa's trust-first health financing" },
+      { title: "About Fundezer website — Africa's trust-first health financing" },
       {
         name: "description",
         content:
           "FundEzer's vision, mission and product principles: verified hospitals, transparent closed-loop payments and AI-assisted verification for Nigerian patients.",
       },
-      { property: "og:title", content: "About FundEzer" },
+      { property: "og:title", content: "About Fundezer website" },
       {
         property: "og:description",
         content: "Why we built a hospital-centric healthcare crowdfunding platform for Africa.",

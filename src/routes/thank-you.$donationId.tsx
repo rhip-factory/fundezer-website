@@ -11,13 +11,13 @@ export const Route = createFileRoute("/thank-you/$donationId")({
   component: ThankYou,
   head: () => ({
     meta: [
-      { title: "Donation confirmed | FundEzer" },
+      { title: "Donation confirmed | Fundezer website" },
       {
         name: "description",
         content:
           "Your FundEzer donation is confirmed. Follow the patient's treatment journey and receive verified hospital updates.",
       },
-      { property: "og:title", content: "Donation confirmed | FundEzer" },
+      { property: "og:title", content: "Donation confirmed | Fundezer website" },
       {
         property: "og:description",
         content: "Your FundEzer donation is confirmed. Follow the patient's treatment journey.",

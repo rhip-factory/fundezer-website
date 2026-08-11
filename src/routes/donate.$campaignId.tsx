@@ -16,7 +16,7 @@ export const Route = createFileRoute("/donate/$campaignId")({
   component: DonatePage,
   head: ({ loaderData }) => {
     const c = loaderData?.campaign;
-    const title = c ? `Donate to ${privateName(c.patient)} | FundEzer` : "Donate | FundEzer";
+    const title = c ? `Donate to ${privateName(c.patient)} | Fundezer website` : "Donate | Fundezer website";
     const description = c
       ? `Support ${privateName(c.patient)}'s treatment at ${c.hospital}. Funds are paid to the hospital and you receive verified treatment updates.`
       : "Donate to a hospital-verified patient campaign and follow the treatment journey.";

@@ -7,13 +7,13 @@ export const Route = createFileRoute("/hospitals")({
   component: Hospitals,
   head: () => ({
     meta: [
-      { title: "Partner hospitals in Abuja — FundEzer" },
+      { title: "Partner hospitals in Abuja — Fundezer website" },
       {
         name: "description",
         content:
           "Meet the verified Abuja hospitals that assess patient applications, approve treatment plans and receive FundEzer donations directly.",
       },
-      { property: "og:title", content: "Partner hospitals — FundEzer" },
+      { property: "og:title", content: "Partner hospitals — Fundezer website" },
       {
         property: "og:description",
         content: "Verified Abuja hospitals validating and treating FundEzer patients.",

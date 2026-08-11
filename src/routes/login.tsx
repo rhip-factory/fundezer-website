@@ -6,13 +6,13 @@ export const Route = createFileRoute("/login")({
   component: Login,
   head: () => ({
     meta: [
-      { title: "Log in — FundEzer" },
+      { title: "Log in — Fundezer website" },
       {
         name: "description",
         content:
           "Log in to your FundEzer patient, hospital or donor account to track applications, campaigns and treatment progress.",
       },
-      { property: "og:title", content: "Log in — FundEzer" },
+      { property: "og:title", content: "Log in — Fundezer website" },
       { property: "og:description", content: "Access your FundEzer dashboard." },
       { property: "og:url", content: "/login" },
     ],

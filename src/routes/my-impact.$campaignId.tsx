@@ -22,8 +22,8 @@ export const Route = createFileRoute("/my-impact/$campaignId")({
   head: ({ loaderData }) => {
     const c = loaderData?.campaign;
     const title = c
-      ? `${privateName(c.patient)}'s journey | FundEzer`
-      : "Patient journey | FundEzer";
+      ? `${privateName(c.patient)}'s journey | Fundezer website`
+      : "Patient journey | Fundezer website";
     return {
       meta: [
         { title },

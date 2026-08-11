@@ -20,13 +20,13 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "FundEzer — Healthcare crowdfunding paid straight to hospitals" },
+      { title: "Fundezer website" },
       {
         name: "description",
         content:
           "Fund verified patient treatments in Abuja. Every donation goes directly to the partner hospital, tracked in real time. Help from all.",
       },
-      { property: "og:title", content: "FundEzer — Healthcare crowdfunding paid straight to hospitals" },
+      { property: "og:title", content: "Fundezer website" },
       {
         property: "og:description",
         content:

@@ -5,13 +5,13 @@ export const Route = createFileRoute("/terms")({
   component: Terms,
   head: () => ({
     meta: [
-      { title: "Terms of use — FundEzer" },
+      { title: "Terms of use — Fundezer website" },
       {
         name: "description",
         content:
           "The terms governing FundEzer campaigns, donations, hospital payouts, refunds and acceptable use of the platform.",
       },
-      { property: "og:title", content: "Terms of use — FundEzer" },
+      { property: "og:title", content: "Terms of use — Fundezer website" },
       { property: "og:description", content: "Rules for patients, hospitals and donors." },
       { property: "og:url", content: "/terms" },
     ],
