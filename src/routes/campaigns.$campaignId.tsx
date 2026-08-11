@@ -187,12 +187,13 @@ function CampaignDetail() {
               className="mt-6 space-y-4"
               onSubmit={(e) => {
                 e.preventDefault();
-                toast.success(
-                  `Thank you! ${formatNaira(amount)} will be paid to ${campaign.hospital}.`,
-                  { description: "A receipt and treatment updates will be sent to your email." },
-                );
+                navigate({
+                  to: "/donate/$campaignId",
+                  params: { campaignId: campaign.id },
+                });
               }}
             >
+
               <div className="grid grid-cols-4 gap-2">
                 {presets.map((p) => (
                   <button
