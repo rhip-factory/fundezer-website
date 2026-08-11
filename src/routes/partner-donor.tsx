@@ -15,6 +15,10 @@ import {
 } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { supabase } from "@/integrations/supabase/client";
+import heroImage from "@/assets/partner-hero.jpg";
+import transparencyImage from "@/assets/partner-transparency.jpg";
+import safetyNetImage from "@/assets/partner-safetynet.jpg";
+import organisationsImage from "@/assets/partner-organisations.jpg";
 
 export const Route = createFileRoute("/partner-donor")({
   component: PartnerDonor,
@@ -118,38 +122,60 @@ function PartnerDonor() {
     <PageShell>
       {/* 1. Hero */}
       <section className="border-b border-border bg-[image:var(--gradient-soft)]">
-        <div className="container-page py-16 md:py-24">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-            Partner donors
-          </p>
-          <h1 className="mt-3 max-w-3xl text-4xl font-semibold leading-[1.1] text-foreground md:text-5xl">
-            You may not know their name. But you can still change their story.
-          </h1>
-          <div className="mt-6 max-w-2xl space-y-3">
-            {heroBeats.map((line) => (
-              <p key={line} className="text-base leading-relaxed text-muted-foreground md:text-lg">
-                {line}
-              </p>
-            ))}
+        <div className="container-page grid items-center gap-12 py-16 md:py-24 lg:grid-cols-[1.05fr_1fr]">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+              Partner donors
+            </p>
+            <h1 className="mt-3 max-w-2xl text-4xl font-semibold leading-[1.1] text-foreground md:text-5xl">
+              You may not know their name. But you can still change their story.
+            </h1>
+            <div className="mt-6 max-w-xl space-y-3">
+              {heroBeats.map((line) => (
+                <p key={line} className="text-base leading-relaxed text-muted-foreground md:text-lg">
+                  {line}
+                </p>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap items-center gap-5">
+              <button
+                type="button"
+                onClick={() => scrollToId("join")}
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-lift transition-transform hover:-translate-y-0.5"
+              >
+                Become a Partner Donor <ArrowRight className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToId("ways-to-help")}
+                className="text-sm font-semibold text-primary hover:underline"
+              >
+                See ways to give
+              </button>
+            </div>
           </div>
-          <div className="mt-8 flex flex-wrap items-center gap-5">
-            <button
-              type="button"
-              onClick={() => scrollToId("join")}
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-lift transition-transform hover:-translate-y-0.5"
-            >
-              Become a Partner Donor <ArrowRight className="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToId("ways-to-help")}
-              className="text-sm font-semibold text-primary hover:underline"
-            >
-              See ways to give
-            </button>
+
+          <div className="relative">
+            <img
+              src={heroImage}
+              alt="A nurse holding the hand of a smiling patient in a hospital ward"
+              width={1280}
+              height={1280}
+              className="aspect-4/5 w-full rounded-3xl object-cover shadow-lift sm:aspect-square lg:aspect-4/5"
+            />
+            <div className="absolute -bottom-6 left-4 right-4 rounded-2xl border border-border bg-card/95 p-5 shadow-lift backdrop-blur sm:left-8 sm:right-auto sm:max-w-xs">
+              <div className="flex items-center gap-3">
+                <ShieldCheck className="h-5 w-5 shrink-0 text-primary-deep" />
+                <p className="text-sm font-medium leading-snug text-foreground">
+                  Every campaign is connected to a verified hospital &mdash; funds go to care, never
+                  cash.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
 
       {/* 2. What if help was already there */}
       <section className="container-page py-20 md:py-24">
