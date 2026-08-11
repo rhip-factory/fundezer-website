@@ -24,6 +24,7 @@ import { Route as SuccessStoriesRouteImport } from './routes/success-stories'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as CampaignsIndexRouteImport } from './routes/campaigns.index'
 import { Route as CampaignsCampaignIdRouteImport } from './routes/campaigns.$campaignId'
+import { Route as DonateCampaignIdRouteImport } from './routes/donate.$campaignId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -100,6 +101,11 @@ const CampaignsCampaignIdRoute = CampaignsCampaignIdRouteImport.update({
   path: '/campaigns/$campaignId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DonateCampaignIdRoute = DonateCampaignIdRouteImport.update({
+  id: '/donate/$campaignId',
+  path: '/donate/$campaignId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/success-stories': typeof SuccessStoriesRoute
   '/terms': typeof TermsRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
+  '/donate/$campaignId': typeof DonateCampaignIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/success-stories': typeof SuccessStoriesRoute
   '/terms': typeof TermsRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
+  '/donate/$campaignId': typeof DonateCampaignIdRoute
   '/campaigns': typeof CampaignsIndexRoute
 }
 export interface FileRoutesById {
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/success-stories': typeof SuccessStoriesRoute
   '/terms': typeof TermsRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
+  '/donate/$campaignId': typeof DonateCampaignIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
 }
 export interface FileRouteTypes {
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/success-stories'
     | '/terms'
     | '/campaigns/$campaignId'
+    | '/donate/$campaignId'
     | '/campaigns/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/success-stories'
     | '/terms'
     | '/campaigns/$campaignId'
+    | '/donate/$campaignId'
     | '/campaigns'
   id:
     | '__root__'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/success-stories'
     | '/terms'
     | '/campaigns/$campaignId'
+    | '/donate/$campaignId'
     | '/campaigns/'
   fileRoutesById: FileRoutesById
 }
@@ -222,6 +234,7 @@ export interface RootRouteChildren {
   SuccessStoriesRoute: typeof SuccessStoriesRoute
   TermsRoute: typeof TermsRoute
   CampaignsCampaignIdRoute: typeof CampaignsCampaignIdRoute
+  DonateCampaignIdRoute: typeof DonateCampaignIdRoute
   CampaignsIndexRoute: typeof CampaignsIndexRoute
 }
 
@@ -332,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CampaignsCampaignIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/donate/$campaignId': {
+      id: '/donate/$campaignId'
+      path: '/donate/$campaignId'
+      fullPath: '/donate/$campaignId'
+      preLoaderRoute: typeof DonateCampaignIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -350,18 +370,9 @@ const rootRouteChildren: RootRouteChildren = {
   SuccessStoriesRoute: SuccessStoriesRoute,
   TermsRoute: TermsRoute,
   CampaignsCampaignIdRoute: CampaignsCampaignIdRoute,
+  DonateCampaignIdRoute: DonateCampaignIdRoute,
   CampaignsIndexRoute: CampaignsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
