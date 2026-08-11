@@ -26,6 +26,7 @@ import { Route as CampaignsIndexRouteImport } from './routes/campaigns.index'
 import { Route as CampaignsCampaignIdRouteImport } from './routes/campaigns.$campaignId'
 import { Route as DonateCampaignIdRouteImport } from './routes/donate.$campaignId'
 import { Route as MyImpactIndexRouteImport } from './routes/my-impact.index'
+import { Route as MyImpactCampaignIdRouteImport } from './routes/my-impact.$campaignId'
 import { Route as ThankYouDonationIdRouteImport } from './routes/thank-you.$donationId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -113,6 +114,11 @@ const MyImpactIndexRoute = MyImpactIndexRouteImport.update({
   path: '/my-impact/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MyImpactCampaignIdRoute = MyImpactCampaignIdRouteImport.update({
+  id: '/my-impact/$campaignId',
+  path: '/my-impact/$campaignId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ThankYouDonationIdRoute = ThankYouDonationIdRouteImport.update({
   id: '/thank-you/$donationId',
   path: '/thank-you/$donationId',
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
   '/donate/$campaignId': typeof DonateCampaignIdRoute
+  '/my-impact/$campaignId': typeof MyImpactCampaignIdRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
   '/my-impact/': typeof MyImpactIndexRoute
@@ -155,6 +162,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
   '/donate/$campaignId': typeof DonateCampaignIdRoute
+  '/my-impact/$campaignId': typeof MyImpactCampaignIdRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
   '/campaigns': typeof CampaignsIndexRoute
   '/my-impact': typeof MyImpactIndexRoute
@@ -176,6 +184,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
   '/donate/$campaignId': typeof DonateCampaignIdRoute
+  '/my-impact/$campaignId': typeof MyImpactCampaignIdRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
   '/my-impact/': typeof MyImpactIndexRoute
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/campaigns/$campaignId'
     | '/donate/$campaignId'
+    | '/my-impact/$campaignId'
     | '/thank-you/$donationId'
     | '/campaigns/'
     | '/my-impact/'
@@ -218,6 +228,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/campaigns/$campaignId'
     | '/donate/$campaignId'
+    | '/my-impact/$campaignId'
     | '/thank-you/$donationId'
     | '/campaigns'
     | '/my-impact'
@@ -238,6 +249,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/campaigns/$campaignId'
     | '/donate/$campaignId'
+    | '/my-impact/$campaignId'
     | '/thank-you/$donationId'
     | '/campaigns/'
     | '/my-impact/'
@@ -259,6 +271,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   CampaignsCampaignIdRoute: typeof CampaignsCampaignIdRoute
   DonateCampaignIdRoute: typeof DonateCampaignIdRoute
+  MyImpactCampaignIdRoute: typeof MyImpactCampaignIdRoute
   ThankYouDonationIdRoute: typeof ThankYouDonationIdRoute
   CampaignsIndexRoute: typeof CampaignsIndexRoute
   MyImpactIndexRoute: typeof MyImpactIndexRoute
@@ -385,6 +398,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyImpactIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/my-impact/$campaignId': {
+      id: '/my-impact/$campaignId'
+      path: '/my-impact/$campaignId'
+      fullPath: '/my-impact/$campaignId'
+      preLoaderRoute: typeof MyImpactCampaignIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/thank-you/$donationId': {
       id: '/thank-you/$donationId'
       path: '/thank-you/$donationId'
@@ -411,6 +431,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   CampaignsCampaignIdRoute: CampaignsCampaignIdRoute,
   DonateCampaignIdRoute: DonateCampaignIdRoute,
+  MyImpactCampaignIdRoute: MyImpactCampaignIdRoute,
   ThankYouDonationIdRoute: ThankYouDonationIdRoute,
   CampaignsIndexRoute: CampaignsIndexRoute,
   MyImpactIndexRoute: MyImpactIndexRoute,
