@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import {
   BadgeCheck,
@@ -46,6 +46,7 @@ const presets = [5000, 10000, 25000, 100000];
 function CampaignDetail() {
   const { campaignId } = Route.useParams();
   const campaign = campaigns.find((c) => c.id === campaignId) as Campaign;
+  const navigate = useNavigate();
   const [amount, setAmount] = useState(10000);
   const [method, setMethod] = useState("card");
   const pct = Math.round((campaign.raised / campaign.goal) * 100);
