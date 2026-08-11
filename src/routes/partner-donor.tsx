@@ -15,6 +15,10 @@ import {
 } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { supabase } from "@/integrations/supabase/client";
+import heroImage from "@/assets/partner-hero.jpg";
+import transparencyImage from "@/assets/partner-transparency.jpg";
+import safetyNetImage from "@/assets/partner-safetynet.jpg";
+import organisationsImage from "@/assets/partner-organisations.jpg";
 
 export const Route = createFileRoute("/partner-donor")({
   component: PartnerDonor,
@@ -118,38 +122,60 @@ function PartnerDonor() {
     <PageShell>
       {/* 1. Hero */}
       <section className="border-b border-border bg-[image:var(--gradient-soft)]">
-        <div className="container-page py-16 md:py-24">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-            Partner donors
-          </p>
-          <h1 className="mt-3 max-w-3xl text-4xl font-semibold leading-[1.1] text-foreground md:text-5xl">
-            You may not know their name. But you can still change their story.
-          </h1>
-          <div className="mt-6 max-w-2xl space-y-3">
-            {heroBeats.map((line) => (
-              <p key={line} className="text-base leading-relaxed text-muted-foreground md:text-lg">
-                {line}
-              </p>
-            ))}
+        <div className="container-page grid items-center gap-12 py-16 md:py-24 lg:grid-cols-[1.05fr_1fr]">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+              Partner donors
+            </p>
+            <h1 className="mt-3 max-w-2xl text-4xl font-semibold leading-[1.1] text-foreground md:text-5xl">
+              You may not know their name. But you can still change their story.
+            </h1>
+            <div className="mt-6 max-w-xl space-y-3">
+              {heroBeats.map((line) => (
+                <p key={line} className="text-base leading-relaxed text-muted-foreground md:text-lg">
+                  {line}
+                </p>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap items-center gap-5">
+              <button
+                type="button"
+                onClick={() => scrollToId("join")}
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-lift transition-transform hover:-translate-y-0.5"
+              >
+                Become a Partner Donor <ArrowRight className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToId("ways-to-help")}
+                className="text-sm font-semibold text-primary hover:underline"
+              >
+                See ways to give
+              </button>
+            </div>
           </div>
-          <div className="mt-8 flex flex-wrap items-center gap-5">
-            <button
-              type="button"
-              onClick={() => scrollToId("join")}
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-lift transition-transform hover:-translate-y-0.5"
-            >
-              Become a Partner Donor <ArrowRight className="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToId("ways-to-help")}
-              className="text-sm font-semibold text-primary hover:underline"
-            >
-              See ways to give
-            </button>
+
+          <div className="relative">
+            <img
+              src={heroImage}
+              alt="A nurse holding the hand of a smiling patient in a hospital ward"
+              width={1280}
+              height={1280}
+              className="aspect-4/5 w-full rounded-3xl object-cover shadow-lift sm:aspect-square lg:aspect-4/5"
+            />
+            <div className="absolute -bottom-6 left-4 right-4 rounded-2xl border border-border bg-card/95 p-5 shadow-lift backdrop-blur sm:left-8 sm:right-auto sm:max-w-xs">
+              <div className="flex items-center gap-3">
+                <ShieldCheck className="h-5 w-5 shrink-0 text-primary-deep" />
+                <p className="text-sm font-medium leading-snug text-foreground">
+                  Every campaign is connected to a verified hospital &mdash; funds go to care, never
+                  cash.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
 
       {/* 2. What if help was already there */}
       <section className="container-page py-20 md:py-24">
@@ -263,17 +289,28 @@ function PartnerDonor() {
 
       {/* 4. Transparency */}
       <section className="container-page py-20 md:py-24">
-        <div className="max-w-3xl">
-          <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
-            Your giving should not disappear into a black hole
-          </h2>
-          <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
-            One of the biggest problems with informal medical fundraising isn&rsquo;t a lack of
-            generosity. It&rsquo;s a lack of trust. You give money and wonder: Did it reach the
-            person? Was the medical need genuine? Was the money actually used for treatment?
-            FundEzer is designed around transparency.
-          </p>
+        <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
+          <div>
+            <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
+              Your giving should not disappear into a black hole
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+              One of the biggest problems with informal medical fundraising isn&rsquo;t a lack of
+              generosity. It&rsquo;s a lack of trust. You give money and wonder: Did it reach the
+              person? Was the medical need genuine? Was the money actually used for treatment?
+              FundEzer is designed around transparency.
+            </p>
+          </div>
+          <img
+            src={transparencyImage}
+            alt="A doctor reviewing medical scans and documentation during verification"
+            width={1280}
+            height={960}
+            loading="lazy"
+            className="aspect-4/3 w-full rounded-3xl object-cover shadow-lift"
+          />
         </div>
+
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {trustItems.map((item) => (
             <div key={item.title} className="surface-card p-6">
@@ -306,13 +343,24 @@ function PartnerDonor() {
               ready when that moment comes.
             </p>
           </div>
-          <blockquote className="rounded-3xl border border-primary/30 bg-primary-soft/60 p-8">
-            <ShieldCheck className="h-6 w-6 text-primary-deep" />
-            <p className="mt-4 font-display text-xl leading-relaxed text-foreground">
-              Your recurring donation helps us move from &ldquo;Who can help this person?&rdquo; to
-              &ldquo;How can we help this person?&rdquo;
-            </p>
-          </blockquote>
+          <div className="relative overflow-hidden rounded-3xl shadow-lift">
+            <img
+              src={safetyNetImage}
+              alt="A family embracing in a hospital corridor after receiving good news"
+              width={1280}
+              height={960}
+              loading="lazy"
+              className="aspect-4/3 w-full object-cover"
+            />
+            <blockquote className="absolute inset-x-4 bottom-4 rounded-2xl border border-primary/30 bg-card/95 p-6 backdrop-blur">
+              <ShieldCheck className="h-6 w-6 text-primary-deep" />
+              <p className="mt-3 font-display text-lg leading-relaxed text-foreground">
+                Your recurring donation helps us move from &ldquo;Who can help this person?&rdquo;
+                to &ldquo;How can we help this person?&rdquo;
+              </p>
+            </blockquote>
+          </div>
+
         </div>
       </section>
 
@@ -358,6 +406,15 @@ function PartnerDonor() {
             we can build programmes around:
           </p>
         </div>
+        <img
+          src={organisationsImage}
+          alt="A corporate team volunteering together for a healthcare giving programme"
+          width={1280}
+          height={864}
+          loading="lazy"
+          className="mt-10 aspect-21/9 w-full rounded-3xl object-cover shadow-lift"
+        />
+
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {orgProgrammes.map(([title, body]) => (
             <div key={title} className="surface-card p-6">
