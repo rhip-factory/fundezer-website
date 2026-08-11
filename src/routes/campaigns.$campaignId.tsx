@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import {
   BadgeCheck,
@@ -46,6 +46,7 @@ const presets = [5000, 10000, 25000, 100000];
 function CampaignDetail() {
   const { campaignId } = Route.useParams();
   const campaign = campaigns.find((c) => c.id === campaignId) as Campaign;
+  const navigate = useNavigate();
   const [amount, setAmount] = useState(10000);
   const [method, setMethod] = useState("card");
   const pct = Math.round((campaign.raised / campaign.goal) * 100);
@@ -187,12 +188,13 @@ function CampaignDetail() {
               className="mt-6 space-y-4"
               onSubmit={(e) => {
                 e.preventDefault();
-                toast.success(
-                  `Thank you! ${formatNaira(amount)} will be paid to ${campaign.hospital}.`,
-                  { description: "A receipt and treatment updates will be sent to your email." },
-                );
+                navigate({
+                  to: "/donate/$campaignId",
+                  params: { campaignId: campaign.id },
+                });
               }}
             >
+
               <div className="grid grid-cols-4 gap-2">
                 {presets.map((p) => (
                   <button
