@@ -9,6 +9,8 @@ const columns = [
       { to: "/how-it-works", label: "How it works" },
       { to: "/apply", label: "Start a Campaign" },
       { to: "/hospitals", label: "Partner hospitals" },
+      { to: "/partner-donor", label: "Partner Donors" },
+
     ],
   },
   {

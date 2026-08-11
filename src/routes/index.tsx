@@ -2,12 +2,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   BadgeCheck,
   Building2,
+  HandHeart,
   HeartHandshake,
+  Repeat,
   ShieldCheck,
   Sparkles,
   Wallet,
   ArrowRight,
 } from "lucide-react";
+
 import { PageShell } from "@/components/site/PageShell";
 import { CampaignCard } from "@/components/site/CampaignCard";
 import { campaigns, hospitals } from "@/lib/data";
@@ -218,7 +221,95 @@ function Index() {
         </div>
       </section>
 
+      {/* Ways to give */}
+      <section className="border-y border-border bg-card py-20 md:py-24">
+        <div className="container-page">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+              Ways to give
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold text-foreground md:text-4xl">
+              Give beyond a single campaign.
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+              Support the patients in front of you today, or help build a safety net for the ones
+              who&rsquo;ll need it tomorrow.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            <div className="surface-card flex flex-col p-6">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft text-primary-deep">
+                <HeartHandshake className="h-5 w-5" />
+              </div>
+              <h3 className="mt-5 font-display text-base font-semibold text-foreground">
+                Support when you can
+              </h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                See verified medical campaigns and choose the patients or treatments you want to
+                support.
+              </p>
+              <Link
+                to="/campaigns"
+                className="mt-5 inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
+              >
+                I want to help a patient
+              </Link>
+            </div>
+
+            <div className="surface-card flex flex-col p-6">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft text-primary-deep">
+                <Repeat className="h-5 w-5" />
+              </div>
+              <h3 className="mt-5 font-display text-base font-semibold text-foreground">
+                Become a recurring donor
+              </h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                Set aside an amount you&rsquo;re comfortable giving regularly and help build a
+                dependable pool of support.
+              </p>
+              <Link
+                to="/partner-donor"
+                hash="join"
+                className="mt-5 inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
+              >
+                Become a recurring donor
+              </Link>
+            </div>
+
+            <div className="surface-card flex flex-col p-6">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft text-primary-deep">
+                <HandHeart className="h-5 w-5" />
+              </div>
+              <h3 className="mt-5 font-display text-base font-semibold text-foreground">
+                Become a Partner Donor
+              </h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                Companies, foundations, NGOs, churches and associations can partner with FundEzer to
+                fund healthcare at scale.
+              </p>
+              <Link
+                to="/partner-donor"
+                className="mt-5 inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
+              >
+                Become a partner
+              </Link>
+            </div>
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              to="/partner-donor"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+            >
+              Learn more about all the ways to give <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Hospitals strip */}
+
       <section className="border-y border-border bg-card py-16">
         <div className="container-page">
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">

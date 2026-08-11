@@ -17,6 +17,7 @@ import { Route as FaqsRouteImport } from './routes/faqs'
 import { Route as HospitalsRouteImport } from './routes/hospitals'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PartnerDonorRouteImport } from './routes/partner-donor'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as SuccessStoriesRouteImport } from './routes/success-stories'
@@ -64,6 +65,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PartnerDonorRoute = PartnerDonorRouteImport.update({
+  id: '/partner-donor',
+  path: '/partner-donor',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/hospitals': typeof HospitalsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/login': typeof LoginRoute
+  '/partner-donor': typeof PartnerDonorRoute
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/success-stories': typeof SuccessStoriesRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByTo {
   '/hospitals': typeof HospitalsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/login': typeof LoginRoute
+  '/partner-donor': typeof PartnerDonorRoute
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/success-stories': typeof SuccessStoriesRoute
@@ -137,6 +145,7 @@ export interface FileRoutesById {
   '/hospitals': typeof HospitalsRoute
   '/how-it-works': typeof HowItWorksRoute
   '/login': typeof LoginRoute
+  '/partner-donor': typeof PartnerDonorRoute
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/success-stories': typeof SuccessStoriesRoute
@@ -155,6 +164,7 @@ export interface FileRouteTypes {
     | '/hospitals'
     | '/how-it-works'
     | '/login'
+    | '/partner-donor'
     | '/privacy'
     | '/register'
     | '/success-stories'
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
     | '/hospitals'
     | '/how-it-works'
     | '/login'
+    | '/partner-donor'
     | '/privacy'
     | '/register'
     | '/success-stories'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
     | '/hospitals'
     | '/how-it-works'
     | '/login'
+    | '/partner-donor'
     | '/privacy'
     | '/register'
     | '/success-stories'
@@ -204,6 +216,7 @@ export interface RootRouteChildren {
   HospitalsRoute: typeof HospitalsRoute
   HowItWorksRoute: typeof HowItWorksRoute
   LoginRoute: typeof LoginRoute
+  PartnerDonorRoute: typeof PartnerDonorRoute
   PrivacyRoute: typeof PrivacyRoute
   RegisterRoute: typeof RegisterRoute
   SuccessStoriesRoute: typeof SuccessStoriesRoute
@@ -270,6 +283,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/partner-donor': {
+      id: '/partner-donor'
+      path: '/partner-donor'
+      fullPath: '/partner-donor'
+      preLoaderRoute: typeof PartnerDonorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -324,6 +344,7 @@ const rootRouteChildren: RootRouteChildren = {
   HospitalsRoute: HospitalsRoute,
   HowItWorksRoute: HowItWorksRoute,
   LoginRoute: LoginRoute,
+  PartnerDonorRoute: PartnerDonorRoute,
   PrivacyRoute: PrivacyRoute,
   RegisterRoute: RegisterRoute,
   SuccessStoriesRoute: SuccessStoriesRoute,
@@ -334,13 +355,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
