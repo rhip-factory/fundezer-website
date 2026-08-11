@@ -25,6 +25,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as CampaignsIndexRouteImport } from './routes/campaigns.index'
 import { Route as CampaignsCampaignIdRouteImport } from './routes/campaigns.$campaignId'
 import { Route as DonateCampaignIdRouteImport } from './routes/donate.$campaignId'
+import { Route as MyImpactIndexRouteImport } from './routes/my-impact.index'
 import { Route as ThankYouDonationIdRouteImport } from './routes/thank-you.$donationId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -107,6 +108,11 @@ const DonateCampaignIdRoute = DonateCampaignIdRouteImport.update({
   path: '/donate/$campaignId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MyImpactIndexRoute = MyImpactIndexRouteImport.update({
+  id: '/my-impact/',
+  path: '/my-impact/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ThankYouDonationIdRoute = ThankYouDonationIdRouteImport.update({
   id: '/thank-you/$donationId',
   path: '/thank-you/$donationId',
@@ -131,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/donate/$campaignId': typeof DonateCampaignIdRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
+  '/my-impact/': typeof MyImpactIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -150,6 +157,7 @@ export interface FileRoutesByTo {
   '/donate/$campaignId': typeof DonateCampaignIdRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
   '/campaigns': typeof CampaignsIndexRoute
+  '/my-impact': typeof MyImpactIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -170,6 +178,7 @@ export interface FileRoutesById {
   '/donate/$campaignId': typeof DonateCampaignIdRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
+  '/my-impact/': typeof MyImpactIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -191,6 +200,7 @@ export interface FileRouteTypes {
     | '/donate/$campaignId'
     | '/thank-you/$donationId'
     | '/campaigns/'
+    | '/my-impact/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -210,6 +220,7 @@ export interface FileRouteTypes {
     | '/donate/$campaignId'
     | '/thank-you/$donationId'
     | '/campaigns'
+    | '/my-impact'
   id:
     | '__root__'
     | '/'
@@ -229,6 +240,7 @@ export interface FileRouteTypes {
     | '/donate/$campaignId'
     | '/thank-you/$donationId'
     | '/campaigns/'
+    | '/my-impact/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -249,6 +261,7 @@ export interface RootRouteChildren {
   DonateCampaignIdRoute: typeof DonateCampaignIdRoute
   ThankYouDonationIdRoute: typeof ThankYouDonationIdRoute
   CampaignsIndexRoute: typeof CampaignsIndexRoute
+  MyImpactIndexRoute: typeof MyImpactIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -365,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DonateCampaignIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/my-impact/': {
+      id: '/my-impact/'
+      path: '/my-impact'
+      fullPath: '/my-impact/'
+      preLoaderRoute: typeof MyImpactIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/thank-you/$donationId': {
       id: '/thank-you/$donationId'
       path: '/thank-you/$donationId'
@@ -393,6 +413,7 @@ const rootRouteChildren: RootRouteChildren = {
   DonateCampaignIdRoute: DonateCampaignIdRoute,
   ThankYouDonationIdRoute: ThankYouDonationIdRoute,
   CampaignsIndexRoute: CampaignsIndexRoute,
+  MyImpactIndexRoute: MyImpactIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
