@@ -289,17 +289,28 @@ function PartnerDonor() {
 
       {/* 4. Transparency */}
       <section className="container-page py-20 md:py-24">
-        <div className="max-w-3xl">
-          <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
-            Your giving should not disappear into a black hole
-          </h2>
-          <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
-            One of the biggest problems with informal medical fundraising isn&rsquo;t a lack of
-            generosity. It&rsquo;s a lack of trust. You give money and wonder: Did it reach the
-            person? Was the medical need genuine? Was the money actually used for treatment?
-            FundEzer is designed around transparency.
-          </p>
+        <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
+          <div>
+            <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
+              Your giving should not disappear into a black hole
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+              One of the biggest problems with informal medical fundraising isn&rsquo;t a lack of
+              generosity. It&rsquo;s a lack of trust. You give money and wonder: Did it reach the
+              person? Was the medical need genuine? Was the money actually used for treatment?
+              FundEzer is designed around transparency.
+            </p>
+          </div>
+          <img
+            src={transparencyImage}
+            alt="A doctor reviewing medical scans and documentation during verification"
+            width={1280}
+            height={960}
+            loading="lazy"
+            className="aspect-4/3 w-full rounded-3xl object-cover shadow-lift"
+          />
         </div>
+
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {trustItems.map((item) => (
             <div key={item.title} className="surface-card p-6">
@@ -332,13 +343,24 @@ function PartnerDonor() {
               ready when that moment comes.
             </p>
           </div>
-          <blockquote className="rounded-3xl border border-primary/30 bg-primary-soft/60 p-8">
-            <ShieldCheck className="h-6 w-6 text-primary-deep" />
-            <p className="mt-4 font-display text-xl leading-relaxed text-foreground">
-              Your recurring donation helps us move from &ldquo;Who can help this person?&rdquo; to
-              &ldquo;How can we help this person?&rdquo;
-            </p>
-          </blockquote>
+          <div className="relative overflow-hidden rounded-3xl shadow-lift">
+            <img
+              src={safetyNetImage}
+              alt="A family embracing in a hospital corridor after receiving good news"
+              width={1280}
+              height={960}
+              loading="lazy"
+              className="aspect-4/3 w-full object-cover"
+            />
+            <blockquote className="absolute inset-x-4 bottom-4 rounded-2xl border border-primary/30 bg-card/95 p-6 backdrop-blur">
+              <ShieldCheck className="h-6 w-6 text-primary-deep" />
+              <p className="mt-3 font-display text-lg leading-relaxed text-foreground">
+                Your recurring donation helps us move from &ldquo;Who can help this person?&rdquo;
+                to &ldquo;How can we help this person?&rdquo;
+              </p>
+            </blockquote>
+          </div>
+
         </div>
       </section>
 
@@ -384,6 +406,15 @@ function PartnerDonor() {
             we can build programmes around:
           </p>
         </div>
+        <img
+          src={organisationsImage}
+          alt="A corporate team volunteering together for a healthcare giving programme"
+          width={1280}
+          height={864}
+          loading="lazy"
+          className="mt-10 aspect-21/9 w-full rounded-3xl object-cover shadow-lift"
+        />
+
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {orgProgrammes.map(([title, body]) => (
             <div key={title} className="surface-card p-6">
