@@ -24,13 +24,13 @@ export const Route = createFileRoute("/partner-donor")({
   component: PartnerDonor,
   head: () => ({
     meta: [
-      { title: "Become a FundEzer Partner Donor" },
+      { title: "Become a Fundezer website Partner Donor" },
       {
         name: "description",
         content:
           "Support verified medical campaigns as an individual, a recurring donor, or a corporate/organisation partner.",
       },
-      { property: "og:title", content: "Become a FundEzer Partner Donor" },
+      { property: "og:title", content: "Become a Fundezer website Partner Donor" },
       {
         property: "og:description",
         content:

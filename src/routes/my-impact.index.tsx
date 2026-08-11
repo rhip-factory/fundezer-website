@@ -10,13 +10,13 @@ export const Route = createFileRoute("/my-impact/")({
   component: MyImpact,
   head: () => ({
     meta: [
-      { title: "My Impact — patients you support | FundEzer" },
+      { title: "My Impact — patients you support | Fundezer website" },
       {
         name: "description",
         content:
           "See every patient you have supported on FundEzer: total given, campaign funding progress and current treatment stage.",
       },
-      { property: "og:title", content: "My Impact — patients you support | FundEzer" },
+      { property: "og:title", content: "My Impact — patients you support | Fundezer website" },
       {
         property: "og:description",
         content: "Total given, campaigns supported and live treatment progress for your donations.",

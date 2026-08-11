@@ -9,13 +9,13 @@ export const Route = createFileRoute("/apply")({
   component: Apply,
   head: () => ({
     meta: [
-      { title: "Apply for treatment sponsorship — FundEzer" },
+      { title: "Apply for treatment sponsorship — Fundezer website" },
       {
         name: "description",
         content:
           "Start a hospital-verified sponsorship request in Abuja. Register, answer guided questions, review your AI-written story and upload your medical documents.",
       },
-      { property: "og:title", content: "Apply for sponsorship — FundEzer" },
+      { property: "og:title", content: "Apply for sponsorship — Fundezer website" },
       {
         property: "og:description",
         content: "Begin a verified treatment sponsorship request with an Abuja partner hospital.",

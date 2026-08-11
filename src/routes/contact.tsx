@@ -7,13 +7,13 @@ export const Route = createFileRoute("/contact")({
   component: Contact,
   head: () => ({
     meta: [
-      { title: "Contact FundEzer — patients, hospitals and partners" },
+      { title: "Contact Fundezer website — patients, hospitals and partners" },
       {
         name: "description",
         content:
           "Reach the FundEzer team in Abuja about sponsorship applications, hospital partnerships, donations or media enquiries.",
       },
-      { property: "og:title", content: "Contact FundEzer" },
+      { property: "og:title", content: "Contact Fundezer website" },
       { property: "og:description", content: "Get in touch with our Abuja team." },
       { property: "og:url", content: "/contact" },
     ],

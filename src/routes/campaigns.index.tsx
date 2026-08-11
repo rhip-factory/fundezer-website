@@ -9,13 +9,13 @@ export const Route = createFileRoute("/campaigns/")({
   component: BrowseCampaigns,
   head: () => ({
     meta: [
-      { title: "Browse verified campaigns — FundEzer" },
+      { title: "Browse verified campaigns — Fundezer website" },
       {
         name: "description",
         content:
           "Search hospital-verified patient campaigns in Abuja by hospital, condition and amount needed, and donate directly to the treating hospital.",
       },
-      { property: "og:title", content: "Browse verified campaigns — FundEzer" },
+      { property: "og:title", content: "Browse verified campaigns — Fundezer website" },
       {
         property: "og:description",
         content: "Hospital-verified patient campaigns you can fund with confidence.",

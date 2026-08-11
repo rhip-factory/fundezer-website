@@ -5,13 +5,13 @@ export const Route = createFileRoute("/how-it-works")({
   component: HowItWorks,
   head: () => ({
     meta: [
-      { title: "How FundEzer works — application to treatment" },
+      { title: "How Fundezer website works — application to treatment" },
       {
         name: "description",
         content:
           "See how a FundEzer campaign is created: patient application, AI story builder, hospital assessment, fraud screening, publication and milestone payments.",
       },
-      { property: "og:title", content: "How FundEzer works" },
+      { property: "og:title", content: "How Fundezer website works" },
       {
         property: "og:description",
         content: "The full FundEzer workflow from patient application to hospital payment.",

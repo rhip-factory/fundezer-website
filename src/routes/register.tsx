@@ -6,13 +6,13 @@ export const Route = createFileRoute("/register")({
   component: Register,
   head: () => ({
     meta: [
-      { title: "Create your FundEzer account" },
+      { title: "Create your Fundezer website account" },
       {
         name: "description",
         content:
           "Create a FundEzer account as a patient, donor or hospital team member to apply for sponsorship, give to campaigns or review applications.",
       },
-      { property: "og:title", content: "Create your FundEzer account" },
+      { property: "og:title", content: "Create your Fundezer website account" },
       { property: "og:description", content: "Join FundEzer as a patient, donor or hospital." },
       { property: "og:url", content: "/register" },
     ],

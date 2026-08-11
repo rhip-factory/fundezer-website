@@ -8,13 +8,13 @@ export const Route = createFileRoute("/faqs")({
   component: Faqs,
   head: () => ({
     meta: [
-      { title: "FAQs — how donations, verification and payouts work | FundEzer" },
+      { title: "FAQs — how donations, verification and payouts work | Fundezer website" },
       {
         name: "description",
         content:
           "Answers about FundEzer verification, hospital payouts, campaign goals, payment methods and applying for sponsorship in Abuja.",
       },
-      { property: "og:title", content: "FundEzer FAQs" },
+      { property: "og:title", content: "Fundezer website FAQs" },
       {
         property: "og:description",
         content: "Common questions about donating to and applying for FundEzer campaigns.",

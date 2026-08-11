@@ -7,13 +7,13 @@ export const Route = createFileRoute("/success-stories")({
   component: SuccessStories,
   head: () => ({
     meta: [
-      { title: "Success stories — patients treated through FundEzer" },
+      { title: "Success stories — patients treated through Fundezer website" },
       {
         name: "description",
         content:
           "Read from patients whose treatment was fully funded through FundEzer campaigns and paid directly to their Abuja partner hospital.",
       },
-      { property: "og:title", content: "Success stories — FundEzer" },
+      { property: "og:title", content: "Success stories — Fundezer website" },
       {
         property: "og:description",
         content: "Patients treated because donors funded verified hospital campaigns.",

@@ -23,7 +23,7 @@ export const Route = createFileRoute("/campaigns/$campaignId")({
   component: CampaignDetail,
   head: ({ loaderData, params }) => {
     const c = loaderData?.campaign;
-    const title = c ? `${c.patient} — ${c.condition} | FundEzer` : "Campaign | FundEzer";
+    const title = c ? `${c.patient} — ${c.condition} | Fundezer website` : "Campaign | Fundezer website";
     const description = c
       ? `${c.patient} needs ${formatShort(c.goal)} for ${c.condition} at ${c.hospital}. Donate directly to the hospital through FundEzer.`
       : "Hospital-verified patient campaign on FundEzer.";

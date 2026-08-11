@@ -5,13 +5,13 @@ export const Route = createFileRoute("/privacy")({
   component: Privacy,
   head: () => ({
     meta: [
-      { title: "Privacy policy — FundEzer" },
+      { title: "Privacy policy — Fundezer website" },
       {
         name: "description",
         content:
           "How FundEzer collects, encrypts and protects patient medical records, identity data and donor information under Nigerian data protection requirements.",
       },
-      { property: "og:title", content: "Privacy policy — FundEzer" },
+      { property: "og:title", content: "Privacy policy — Fundezer website" },
       { property: "og:description", content: "How we handle medical and personal data." },
       { property: "og:url", content: "/privacy" },
     ],
