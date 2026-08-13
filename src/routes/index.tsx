@@ -392,7 +392,7 @@ function Index() {
                 </p>
                 <Link
                   to={g.to}
-                  hash={g.hash}
+                  {...(g.hash ? { hash: g.hash } : {})}
                   className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:bg-primary-deep hover:-translate-y-0.5"
                 >
                   {g.cta}
