@@ -69,7 +69,7 @@ const donorGroups = [
   {
     image: donorKnownImage,
     alt: "Family and friends gathered around a relative recovering from treatment",
-    title: "Help Someone You Know",
+    title: "Patient's Network",
     body: "When someone close to you needs medical care, you can rally your family, friends, colleagues, and community around their treatment. Support their verified FundEzer campaign and help them get the care they need.",
     cta: "Support Someone You Know",
     to: "/campaigns",
@@ -77,7 +77,7 @@ const donorGroups = [
   {
     image: donorStrangerImage,
     alt: "Neighbours in a community sharing support with one another",
-    title: "Help Someone You May Never Meet",
+    title: "FundEzer Community",
     body: "You don\u2019t have to know a patient to make a difference. Explore verified medical campaigns and contribute to people who need support, wherever their story may be.",
     cta: "Support a Patient",
     to: "/campaigns",
