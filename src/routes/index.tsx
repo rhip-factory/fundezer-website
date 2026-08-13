@@ -85,7 +85,7 @@ const donorGroups = [
   {
     image: donorCorporateImage,
     alt: "A small team planning a community giving initiative together",
-    title: "Make Healthcare Giving Go Further",
+    title: "FundEzer Corporate Sponsors",
     body: "Companies and organisations can partner with FundEzer to support verified medical needs at scale. Sponsor campaigns, fund treatment programmes, or create a structured giving initiative for your organisation.",
     cta: "Become a Corporate Sponsor",
     to: "/partner-donor",
@@ -94,7 +94,7 @@ const donorGroups = [
   {
     image: donorSpontaneousImage,
     alt: "A woman making a donation from her phone in a cafe",
-    title: "Give When You\u2019re Ready to Help",
+    title: "Stop-by (Walk-in) Donors",
     body: "Sometimes, you simply want to help. Stop by, discover verified patients who need support, and make a contribution toward someone\u2019s treatment.",
     cta: "Give Now",
     to: "/campaigns",
