@@ -78,8 +78,8 @@ const donorGroups = [
     image: donorStrangerImage,
     alt: "Neighbours in a community sharing support with one another",
     title: "FundEzer Community",
-    body: "You don\u2019t have to know a patient to make a difference. Explore verified medical campaigns and contribute to people who need support, wherever their story may be.",
-    cta: "Support a Patient",
+    body: "Set aside an amount you are comfortable giving regularly.\n\nYour recurring contribution helps create a more dependable pool of support for patients who need medical funding.",
+    cta: "Become a Recurring Donor",
     to: "/campaigns",
   },
   {
