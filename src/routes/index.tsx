@@ -15,6 +15,10 @@ import { PageShell } from "@/components/site/PageShell";
 import { CampaignCard } from "@/components/site/CampaignCard";
 import { campaigns, hospitals } from "@/lib/data";
 import heroImage from "@/assets/hero-care.jpg";
+import donorKnownImage from "@/assets/donor-known.jpg";
+import donorStrangerImage from "@/assets/donor-stranger.jpg";
+import donorCorporateImage from "@/assets/donor-corporate.jpg";
+import donorSpontaneousImage from "@/assets/donor-spontaneous.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -60,6 +64,51 @@ const pillars = [
     body: "Goal, funds raised, payments made and remaining balance are visible to everyone, released against treatment milestones.",
   },
 ];
+
+const donorGroups = [
+  {
+    image: donorKnownImage,
+    alt: "Family and friends gathered around a relative recovering from treatment",
+    title: "Help Someone You Know",
+    body: "When someone close to you needs medical care, you can rally your family, friends, colleagues, and community around their treatment. Support their verified FundEzer campaign and help them get the care they need.",
+    cta: "Support Someone You Know",
+    to: "/campaigns",
+  },
+  {
+    image: donorStrangerImage,
+    alt: "Neighbours in a community sharing support with one another",
+    title: "Help Someone You May Never Meet",
+    body: "You don\u2019t have to know a patient to make a difference. Explore verified medical campaigns and contribute to people who need support, wherever their story may be.",
+    cta: "Support a Patient",
+    to: "/campaigns",
+  },
+  {
+    image: donorCorporateImage,
+    alt: "A small team planning a community giving initiative together",
+    title: "Make Healthcare Giving Go Further",
+    body: "Companies and organisations can partner with FundEzer to support verified medical needs at scale. Sponsor campaigns, fund treatment programmes, or create a structured giving initiative for your organisation.",
+    cta: "Become a Corporate Sponsor",
+    to: "/partner-donor",
+    hash: "for-organisations",
+  },
+  {
+    image: donorSpontaneousImage,
+    alt: "A woman making a donation from her phone in a cafe",
+    title: "Give When You\u2019re Ready to Help",
+    body: "Sometimes, you simply want to help. Stop by, discover verified patients who need support, and make a contribution toward someone\u2019s treatment.",
+    cta: "Give Now",
+    to: "/campaigns",
+  },
+] satisfies Array<{
+  image: string;
+  alt: string;
+  title: string;
+  body: string;
+  cta: string;
+  to: "/campaigns" | "/partner-donor";
+  hash?: string;
+}>;
+
 
 function Index() {
   const featured = campaigns.slice(0, 3);
@@ -308,7 +357,54 @@ function Index() {
         </div>
       </section>
 
+      {/* Different people, one purpose */}
+      <section className="container-page py-20 md:py-24">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
+            Different People. One Purpose.
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            Whether you&rsquo;re supporting someone you know or helping someone you&rsquo;ve never
+            met, every contribution can help make treatment possible.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {donorGroups.map((g) => (
+            <article
+              key={g.title}
+              className="surface-card group flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+            >
+              <div className="overflow-hidden">
+                <img
+                  src={g.image}
+                  alt={g.alt}
+                  width={1024}
+                  height={768}
+                  loading="lazy"
+                  className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+                <h3 className="font-display text-base font-semibold text-foreground">{g.title}</h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {g.body}
+                </p>
+                <Link
+                  to={g.to}
+                  hash={g.hash}
+                  className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:bg-primary-deep hover:-translate-y-0.5"
+                >
+                  {g.cta}
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       {/* Hospitals strip */}
+
 
       <section className="border-y border-border bg-card py-16">
         <div className="container-page">
