@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 import { HeartHandshake } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { ProgressBar } from "@/components/site/CampaignCard";
-import { formatNaira } from "@/lib/data";
-import { journeyFor, privateName, supportedCampaigns } from "@/lib/donor-store";
+import { campaigns, formatNaira, type Campaign } from "@/lib/data";
+import { journeyFor, privateName } from "@/lib/donor-store";
+import { getDonorOverview } from "@/lib/donor.functions";
+
 
 export const Route = createFileRoute("/_authenticated/my-impact/")({
   component: MyImpact,
