@@ -159,7 +159,7 @@ function PatientProgress() {
               {formatNaira(given)}
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              {first ? `First donated on ${formatDate(first.date)}` : "No donation on this device"}
+              {first ? `First donated on ${formatDate(first.created_at)}` : "No donation recorded yet"}
             </p>
             {donations.length > 1 && (
               <p className="mt-1 text-sm text-muted-foreground">
