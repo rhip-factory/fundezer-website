@@ -6,7 +6,7 @@ import { ProgressBar } from "@/components/site/CampaignCard";
 import { formatNaira } from "@/lib/data";
 import { journeyFor, privateName, supportedCampaigns } from "@/lib/donor-store";
 
-export const Route = createFileRoute("/my-impact/")({
+export const Route = createFileRoute("/_authenticated/my-impact/")({
   component: MyImpact,
   head: () => ({
     meta: [

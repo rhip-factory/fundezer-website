@@ -12,7 +12,7 @@ import {
   type Donation,
 } from "@/lib/donor-store";
 
-export const Route = createFileRoute("/my-impact/$campaignId")({
+export const Route = createFileRoute("/_authenticated/my-impact/$campaignId")({
   loader: ({ params }): { campaign: Campaign } => {
     const campaign = campaigns.find((c) => c.id === params.campaignId);
     if (!campaign) throw notFound();
