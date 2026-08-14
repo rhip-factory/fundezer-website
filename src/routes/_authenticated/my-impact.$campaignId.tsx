@@ -48,16 +48,15 @@ export const Route = createFileRoute("/_authenticated/my-impact/$campaignId")({
 
 function PatientProgress() {
   const { campaign } = Route.useLoaderData();
-  const [donations, setDonations] = useState<Donation[]>([]);
+  const overviewFn = useServerFn(getDonorOverview);
+  const { data } = useQuery({ queryKey: ["donor-overview"], queryFn: () => overviewFn() });
 
-  useEffect(() => {
-    setDonations(donationsForCampaign(campaign.id));
-  }, [campaign.id]);
-
+  const donations = (data?.donations ?? []).filter((d) => d.campaign_id === campaign.id);
   const journey = journeyFor(campaign);
   const pct = Math.round((campaign.raised / campaign.goal) * 100);
-  const given = donations.reduce((s, d) => s + d.amount, 0);
+  const given = donations.reduce((s, d) => s + Number(d.amount), 0);
   const first = donations[donations.length - 1];
+
 
   return (
     <PageShell>
