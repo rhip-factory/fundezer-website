@@ -10,8 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ApplyRouteImport } from './routes/apply'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqsRouteImport } from './routes/faqs'
 import { Route as HospitalsRouteImport } from './routes/hospitals'
@@ -22,16 +24,21 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as SuccessStoriesRouteImport } from './routes/success-stories'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as AuthenticatedWalletRouteImport } from './routes/_authenticated/wallet'
 import { Route as CampaignsIndexRouteImport } from './routes/campaigns.index'
 import { Route as CampaignsCampaignIdRouteImport } from './routes/campaigns.$campaignId'
 import { Route as DonateCampaignIdRouteImport } from './routes/donate.$campaignId'
-import { Route as MyImpactIndexRouteImport } from './routes/my-impact.index'
-import { Route as MyImpactCampaignIdRouteImport } from './routes/my-impact.$campaignId'
 import { Route as ThankYouDonationIdRouteImport } from './routes/thank-you.$donationId'
+import { Route as AuthenticatedMyImpactIndexRouteImport } from './routes/_authenticated/my-impact.index'
+import { Route as AuthenticatedMyImpactCampaignIdRouteImport } from './routes/_authenticated/my-impact.$campaignId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -42,6 +49,11 @@ const AboutRoute = AboutRouteImport.update({
 const ApplyRoute = ApplyRouteImport.update({
   id: '/apply',
   path: '/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -94,6 +106,11 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedWalletRoute = AuthenticatedWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const CampaignsIndexRoute = CampaignsIndexRouteImport.update({
   id: '/campaigns/',
   path: '/campaigns/',
@@ -109,26 +126,29 @@ const DonateCampaignIdRoute = DonateCampaignIdRouteImport.update({
   path: '/donate/$campaignId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MyImpactIndexRoute = MyImpactIndexRouteImport.update({
-  id: '/my-impact/',
-  path: '/my-impact/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyImpactCampaignIdRoute = MyImpactCampaignIdRouteImport.update({
-  id: '/my-impact/$campaignId',
-  path: '/my-impact/$campaignId',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ThankYouDonationIdRoute = ThankYouDonationIdRouteImport.update({
   id: '/thank-you/$donationId',
   path: '/thank-you/$donationId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedMyImpactIndexRoute =
+  AuthenticatedMyImpactIndexRouteImport.update({
+    id: '/my-impact/',
+    path: '/my-impact/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMyImpactCampaignIdRoute =
+  AuthenticatedMyImpactCampaignIdRouteImport.update({
+    id: '/my-impact/$campaignId',
+    path: '/my-impact/$campaignId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
   '/hospitals': typeof HospitalsRoute
@@ -139,17 +159,19 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/success-stories': typeof SuccessStoriesRoute
   '/terms': typeof TermsRoute
+  '/wallet': typeof AuthenticatedWalletRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
   '/donate/$campaignId': typeof DonateCampaignIdRoute
-  '/my-impact/$campaignId': typeof MyImpactCampaignIdRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
-  '/my-impact/': typeof MyImpactIndexRoute
+  '/my-impact/$campaignId': typeof AuthenticatedMyImpactCampaignIdRoute
+  '/my-impact/': typeof AuthenticatedMyImpactIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
   '/hospitals': typeof HospitalsRoute
@@ -160,18 +182,21 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/success-stories': typeof SuccessStoriesRoute
   '/terms': typeof TermsRoute
+  '/wallet': typeof AuthenticatedWalletRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
   '/donate/$campaignId': typeof DonateCampaignIdRoute
-  '/my-impact/$campaignId': typeof MyImpactCampaignIdRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
   '/campaigns': typeof CampaignsIndexRoute
-  '/my-impact': typeof MyImpactIndexRoute
+  '/my-impact/$campaignId': typeof AuthenticatedMyImpactCampaignIdRoute
+  '/my-impact': typeof AuthenticatedMyImpactIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
   '/hospitals': typeof HospitalsRoute
@@ -182,12 +207,13 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/success-stories': typeof SuccessStoriesRoute
   '/terms': typeof TermsRoute
+  '/_authenticated/wallet': typeof AuthenticatedWalletRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
   '/donate/$campaignId': typeof DonateCampaignIdRoute
-  '/my-impact/$campaignId': typeof MyImpactCampaignIdRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
   '/campaigns/': typeof CampaignsIndexRoute
-  '/my-impact/': typeof MyImpactIndexRoute
+  '/_authenticated/my-impact/$campaignId': typeof AuthenticatedMyImpactCampaignIdRoute
+  '/_authenticated/my-impact/': typeof AuthenticatedMyImpactIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -195,6 +221,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/apply'
+    | '/auth'
     | '/contact'
     | '/faqs'
     | '/hospitals'
@@ -205,17 +232,19 @@ export interface FileRouteTypes {
     | '/register'
     | '/success-stories'
     | '/terms'
+    | '/wallet'
     | '/campaigns/$campaignId'
     | '/donate/$campaignId'
-    | '/my-impact/$campaignId'
     | '/thank-you/$donationId'
     | '/campaigns/'
+    | '/my-impact/$campaignId'
     | '/my-impact/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/apply'
+    | '/auth'
     | '/contact'
     | '/faqs'
     | '/hospitals'
@@ -226,17 +255,20 @@ export interface FileRouteTypes {
     | '/register'
     | '/success-stories'
     | '/terms'
+    | '/wallet'
     | '/campaigns/$campaignId'
     | '/donate/$campaignId'
-    | '/my-impact/$campaignId'
     | '/thank-you/$donationId'
     | '/campaigns'
+    | '/my-impact/$campaignId'
     | '/my-impact'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
     | '/apply'
+    | '/auth'
     | '/contact'
     | '/faqs'
     | '/hospitals'
@@ -247,18 +279,21 @@ export interface FileRouteTypes {
     | '/register'
     | '/success-stories'
     | '/terms'
+    | '/_authenticated/wallet'
     | '/campaigns/$campaignId'
     | '/donate/$campaignId'
-    | '/my-impact/$campaignId'
     | '/thank-you/$donationId'
     | '/campaigns/'
-    | '/my-impact/'
+    | '/_authenticated/my-impact/$campaignId'
+    | '/_authenticated/my-impact/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   ApplyRoute: typeof ApplyRoute
+  AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   FaqsRoute: typeof FaqsRoute
   HospitalsRoute: typeof HospitalsRoute
@@ -271,10 +306,8 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   CampaignsCampaignIdRoute: typeof CampaignsCampaignIdRoute
   DonateCampaignIdRoute: typeof DonateCampaignIdRoute
-  MyImpactCampaignIdRoute: typeof MyImpactCampaignIdRoute
   ThankYouDonationIdRoute: typeof ThankYouDonationIdRoute
   CampaignsIndexRoute: typeof CampaignsIndexRoute
-  MyImpactIndexRoute: typeof MyImpactIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -284,6 +317,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -298,6 +338,13 @@ declare module '@tanstack/react-router' {
       path: '/apply'
       fullPath: '/apply'
       preLoaderRoute: typeof ApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -370,6 +417,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/wallet': {
+      id: '/_authenticated/wallet'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof AuthenticatedWalletRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/campaigns/': {
       id: '/campaigns/'
       path: '/campaigns'
@@ -391,20 +445,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DonateCampaignIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/my-impact/': {
-      id: '/my-impact/'
-      path: '/my-impact'
-      fullPath: '/my-impact/'
-      preLoaderRoute: typeof MyImpactIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/my-impact/$campaignId': {
-      id: '/my-impact/$campaignId'
-      path: '/my-impact/$campaignId'
-      fullPath: '/my-impact/$campaignId'
-      preLoaderRoute: typeof MyImpactCampaignIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/thank-you/$donationId': {
       id: '/thank-you/$donationId'
       path: '/thank-you/$donationId'
@@ -412,13 +452,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ThankYouDonationIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/my-impact/': {
+      id: '/_authenticated/my-impact/'
+      path: '/my-impact'
+      fullPath: '/my-impact/'
+      preLoaderRoute: typeof AuthenticatedMyImpactIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my-impact/$campaignId': {
+      id: '/_authenticated/my-impact/$campaignId'
+      path: '/my-impact/$campaignId'
+      fullPath: '/my-impact/$campaignId'
+      preLoaderRoute: typeof AuthenticatedMyImpactCampaignIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedWalletRoute: typeof AuthenticatedWalletRoute
+  AuthenticatedMyImpactCampaignIdRoute: typeof AuthenticatedMyImpactCampaignIdRoute
+  AuthenticatedMyImpactIndexRoute: typeof AuthenticatedMyImpactIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedWalletRoute: AuthenticatedWalletRoute,
+  AuthenticatedMyImpactCampaignIdRoute: AuthenticatedMyImpactCampaignIdRoute,
+  AuthenticatedMyImpactIndexRoute: AuthenticatedMyImpactIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   ApplyRoute: ApplyRoute,
+  AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   FaqsRoute: FaqsRoute,
   HospitalsRoute: HospitalsRoute,
@@ -431,10 +502,8 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   CampaignsCampaignIdRoute: CampaignsCampaignIdRoute,
   DonateCampaignIdRoute: DonateCampaignIdRoute,
-  MyImpactCampaignIdRoute: MyImpactCampaignIdRoute,
   ThankYouDonationIdRoute: ThankYouDonationIdRoute,
   CampaignsIndexRoute: CampaignsIndexRoute,
-  MyImpactIndexRoute: MyImpactIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 import { BadgeCheck, Building2, Circle, CircleDot, CheckCircle2, Repeat } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { ProgressBar } from "@/components/site/CampaignCard";
 import { campaigns, formatNaira, type Campaign } from "@/lib/data";
-import {
-  donationsForCampaign,
-  formatDate,
-  journeyFor,
-  privateName,
-  type Donation,
-} from "@/lib/donor-store";
+import { formatDate, journeyFor, privateName } from "@/lib/donor-store";
+import { getDonorOverview } from "@/lib/donor.functions";
 
-export const Route = createFileRoute("/my-impact/$campaignId")({
+
+export const Route = createFileRoute("/_authenticated/my-impact/$campaignId")({
   loader: ({ params }): { campaign: Campaign } => {
     const campaign = campaigns.find((c) => c.id === params.campaignId);
     if (!campaign) throw notFound();
@@ -48,16 +45,15 @@ export const Route = createFileRoute("/my-impact/$campaignId")({
 
 function PatientProgress() {
   const { campaign } = Route.useLoaderData();
-  const [donations, setDonations] = useState<Donation[]>([]);
+  const overviewFn = useServerFn(getDonorOverview);
+  const { data } = useQuery({ queryKey: ["donor-overview"], queryFn: () => overviewFn() });
 
-  useEffect(() => {
-    setDonations(donationsForCampaign(campaign.id));
-  }, [campaign.id]);
-
+  const donations = (data?.donations ?? []).filter((d) => d.campaign_id === campaign.id);
   const journey = journeyFor(campaign);
   const pct = Math.round((campaign.raised / campaign.goal) * 100);
-  const given = donations.reduce((s, d) => s + d.amount, 0);
+  const given = donations.reduce((s, d) => s + Number(d.amount), 0);
   const first = donations[donations.length - 1];
+
 
   return (
     <PageShell>
@@ -163,7 +159,7 @@ function PatientProgress() {
               {formatNaira(given)}
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              {first ? `First donated on ${formatDate(first.date)}` : "No donation on this device"}
+              {first ? `First donated on ${formatDate(first.created_at)}` : "No donation recorded yet"}
             </p>
             {donations.length > 1 && (
               <p className="mt-1 text-sm text-muted-foreground">

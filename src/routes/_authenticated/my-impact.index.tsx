@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 import { HeartHandshake } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { ProgressBar } from "@/components/site/CampaignCard";
-import { formatNaira } from "@/lib/data";
-import { journeyFor, privateName, supportedCampaigns } from "@/lib/donor-store";
+import { campaigns, formatNaira, type Campaign } from "@/lib/data";
+import { journeyFor, privateName } from "@/lib/donor-store";
+import { getDonorOverview } from "@/lib/donor.functions";
 
-export const Route = createFileRoute("/my-impact/")({
+
+export const Route = createFileRoute("/_authenticated/my-impact/")({
   component: MyImpact,
   head: () => ({
     meta: [
@@ -29,20 +32,25 @@ export const Route = createFileRoute("/my-impact/")({
 });
 
 function MyImpact() {
-  const [items, setItems] = useState<ReturnType<typeof supportedCampaigns>>([]);
-  const [ready, setReady] = useState(false);
+  const overviewFn = useServerFn(getDonorOverview);
+  const { data, isLoading } = useQuery({ queryKey: ["donor-overview"], queryFn: () => overviewFn() });
 
-  useEffect(() => {
-    const sync = () => setItems(supportedCampaigns());
-    sync();
-    setReady(true);
-    window.addEventListener("fundezer:donor-updated", sync);
-    return () => window.removeEventListener("fundezer:donor-updated", sync);
-  }, []);
+  const byCampaign = new Map<string, number>();
+  for (const d of data?.donations ?? []) {
+    byCampaign.set(d.campaign_id, (byCampaign.get(d.campaign_id) ?? 0) + Number(d.amount));
+  }
+  const items = [...byCampaign.entries()]
+    .map(([campaignId, given]) => {
+      const campaign = campaigns.find((c) => c.id === campaignId);
+      return campaign ? { campaign, given } : null;
+    })
+    .filter((v): v is { campaign: Campaign; given: number } => v !== null);
 
-  const totalGiven = items.reduce((sum, i) => sum + i.given, 0);
+  const ready = !isLoading;
+  const totalGiven = data?.totalGiven ?? 0;
   const active = items.filter((i) => i.campaign.raised < i.campaign.goal).length;
   const completed = items.length - active;
+
 
   return (
     <PageShell>

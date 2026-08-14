@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { CheckCircle2, Mail, Share2 } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { ProgressBar } from "@/components/site/CampaignCard";
 import { campaigns, formatNaira } from "@/lib/data";
-import { formatDate, getDonation, privateName, type Donation } from "@/lib/donor-store";
+import { formatDate, privateName } from "@/lib/donor-store";
+import { getDonationReceipt } from "@/lib/donor.functions";
 
 export const Route = createFileRoute("/thank-you/$donationId")({
   component: ThankYou,
@@ -31,17 +33,13 @@ export const Route = createFileRoute("/thank-you/$donationId")({
 
 function ThankYou() {
   const { donationId } = Route.useParams();
-  const [donation, setDonation] = useState<Donation | null>(null);
-  const [ready, setReady] = useState(false);
+  const receiptFn = useServerFn(getDonationReceipt);
+  const { data, isLoading } = useQuery({
+    queryKey: ["donation-receipt", donationId],
+    queryFn: () => receiptFn({ data: { donationId } }),
+  });
 
-  useEffect(() => {
-    setDonation(getDonation(donationId) ?? null);
-    setReady(true);
-  }, [donationId]);
-
-  const campaign = donation ? campaigns.find((c) => c.id === donation.campaignId) : undefined;
-
-  if (!ready) {
+  if (isLoading) {
     return (
       <PageShell>
         <div className="container-page py-24 text-sm text-muted-foreground">Loading…</div>
@@ -49,13 +47,16 @@ function ThankYou() {
     );
   }
 
-  if (!donation || !campaign) {
+  const donation = data?.donation;
+  const local = donation ? campaigns.find((c) => c.id === donation.campaign_id) : undefined;
+
+  if (!donation || !local) {
     return (
       <PageShell>
         <div className="container-page py-24">
           <h1 className="text-3xl font-semibold text-foreground">Donation not found</h1>
           <p className="mt-3 text-muted-foreground">
-            We couldn&rsquo;t find this donation on this device.
+            We couldn&rsquo;t find this donation on your account.
           </p>
           <Link
             to="/campaigns"
@@ -68,23 +69,25 @@ function ThankYou() {
     );
   }
 
-  const pct = Math.round((campaign.raised / campaign.goal) * 100);
+  const raised = Number(data?.totals?.raised ?? local.raised);
+  const pct = Math.min(100, Math.round((raised / local.goal) * 100));
 
   return (
     <PageShell>
       <section className="border-b border-border bg-[image:var(--gradient-soft)]">
         <div className="container-page py-16 md:py-20">
-          <CheckCircle2 className="h-10 w-10 text-primary" />
+          <CheckCircle2 className="h-10 w-10 text-success" />
           <h1 className="mt-5 max-w-2xl text-3xl font-semibold leading-tight text-foreground md:text-4xl">
-            Thank you, {donation.donor.name.split(" ")[0]}
+            Thank you
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-foreground">
             Your donation of{" "}
-            <span className="font-semibold">{formatNaira(donation.amount)}</span> has been received.
+            <span className="font-semibold">{formatNaira(Number(donation.amount))}</span> has been
+            received.
           </p>
           <p className="mt-2 max-w-2xl text-muted-foreground">
-            You are now supporting <strong>{privateName(campaign.patient)}</strong> in receiving
-            treatment at <strong>{campaign.hospital}</strong>.
+            You are now supporting <strong>{privateName(local.patient)}</strong> in receiving
+            treatment at <strong>{local.hospital}</strong>.
           </p>
         </div>
       </section>
@@ -93,21 +96,21 @@ function ThankYou() {
         <div className="surface-card p-6 md:p-8">
           <h2 className="font-display text-lg font-semibold text-foreground">Campaign progress</h2>
           <p className="mt-4 font-display text-2xl font-semibold text-foreground">
-            {formatNaira(campaign.raised)}
+            {formatNaira(raised)}
           </p>
-          <p className="text-sm text-muted-foreground">raised of {formatNaira(campaign.goal)}</p>
+          <p className="text-sm text-muted-foreground">raised of {formatNaira(local.goal)}</p>
           <div className="mt-4">
             <ProgressBar value={pct} />
           </div>
           <p className="mt-3 text-sm font-semibold text-primary">{pct}% funded</p>
           <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-            The hospital has verified this campaign and FundEzer will provide updates as the
-            patient&rsquo;s treatment progresses.
+            Funds are held in the campaign wallet and released to the hospital. FundEzer will send
+            verified updates as the patient&rsquo;s treatment progresses.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               to="/my-impact/$campaignId"
-              params={{ campaignId: campaign.id }}
+              params={{ campaignId: local.id }}
               className="rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
             >
               View patient&rsquo;s journey
@@ -124,32 +127,35 @@ function ThankYou() {
 
         <aside className="surface-card p-6 md:p-8">
           <h2 className="inline-flex items-center gap-2 font-display text-lg font-semibold text-foreground">
-            <Mail className="h-4 w-4 text-primary" /> Receipt sent
+            <Mail className="h-4 w-4 text-primary" /> Receipt
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            A confirmation has been sent to {donation.donor.email}.
+            A confirmation has been sent to the email on your donor account.
           </p>
           <dl className="mt-6 space-y-3 text-sm">
             {[
-              ["Donation amount", formatNaira(donation.amount)],
-              ["Patient", privateName(campaign.patient)],
-              ["Hospital", campaign.hospital],
-              ["Date", formatDate(donation.date)],
+              ["Donation amount", formatNaira(Number(donation.amount))],
+              ["Patient", privateName(local.patient)],
+              ["Hospital", local.hospital],
+              ["Date", formatDate(donation.created_at)],
+              ["Paid from", donation.source],
+              ["Visibility", donation.visibility],
               ["Transaction reference", donation.reference],
-              ["Status", donation.status],
             ].map(([label, value]) => (
               <div key={label} className="flex justify-between gap-4">
                 <dt className="text-muted-foreground">{label}</dt>
-                <dd className="text-right font-semibold text-foreground">{value}</dd>
+                <dd className="text-right font-semibold capitalize text-foreground">{value}</dd>
               </div>
             ))}
           </dl>
-          <Link
-            to="/my-impact"
-            className="mt-8 inline-flex text-sm font-semibold text-primary hover:underline"
-          >
-            Go to My Impact →
-          </Link>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Link to="/my-impact" className="text-sm font-semibold text-primary hover:underline">
+              Go to My Impact →
+            </Link>
+            <Link to="/wallet" className="text-sm font-semibold text-primary hover:underline">
+              Manage wallet →
+            </Link>
+          </div>
         </aside>
       </div>
     </PageShell>
