@@ -93,7 +93,7 @@ function Label({ children, optional }: { children: string; optional?: boolean })
   );
 }
 
-function FieldError({ children }: { children?: string }) {
+function FieldError({ children }: { children?: string | undefined }) {
   if (!children) return null;
   return (
     <span className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-destructive">
@@ -105,6 +105,22 @@ function FieldError({ children }: { children?: string }) {
 function wordCount(text: string) {
   return text.trim() ? text.trim().split(/\s+/).length : 0;
 }
+
+type Errors = {
+  fullName?: string;
+  email?: string;
+  phone?: string;
+  password?: string;
+  confirm?: string;
+  account?: string;
+  state?: string;
+  hospital?: string;
+  dFullName?: string;
+  dEmail?: string;
+  dPhone?: string;
+  dAddress?: string;
+  story?: string;
+};
 
 type Details = {
   fullName: string;
@@ -128,8 +144,8 @@ function Apply() {
   const [generating, setGenerating] = useState(false);
   const [aiWritten, setAiWritten] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [docs, setDocs] = useState<Record<string, string>>({});
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [docs, setDocs] = useState<Errors>({});
+  const [errors, setErrors] = useState<Errors>({});
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [account, setAccount] = useState({
     fullName: "",
@@ -197,7 +213,7 @@ function Apply() {
 
   function createAccount() {
     const { fullName, email, phone, password, confirm } = account;
-    const next: Record<string, string> = {};
+    const next: Errors = {};
     if (!fullName.trim()) next.fullName = "Enter your full name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) next.email = "Enter a valid email address.";
     if (!/^(\+?234|0)[7-9][0-1]\d{8}$/.test(phone.trim().replace(/\s/g, "")))
@@ -241,7 +257,7 @@ function Apply() {
   }
 
   function validateStep(i: number) {
-    const next: Record<string, string> = {};
+    const next: Errors = {};
     if (i === 0 && !accountCreated) next.account = "Create your account to continue.";
     if (i === 1 && outsideAbuja) next.state = "FundEzer is only available in Abuja (FCT) today.";
     if (i === 2 && !hospital) next.hospital = "Choose the hospital that will treat you.";
@@ -325,9 +341,9 @@ function Apply() {
             Start a campaign
           </p>
           <h1 className="mt-3 max-w-2xl font-display text-3xl font-semibold leading-[1.1] text-foreground md:text-4xl">
-            {steps[step].title}
+            {steps[step]?.title}
           </h1>
-          <p className="mt-3 max-w-xl text-muted-foreground">{steps[step].blurb}</p>
+          <p className="mt-3 max-w-xl text-muted-foreground">{steps[step]?.blurb}</p>
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
               <Lock className="h-3.5 w-3.5" /> Private until your hospital approves
@@ -535,8 +551,8 @@ function Apply() {
                     ["Full name", "fullName", "text", "dFullName"],
                     ["Email", "email", "email", "dEmail"],
                     ["Phone", "phone", "tel", "dPhone"],
-                    ["NIN", "nin", "text", ""],
-                    ["Date of birth", "dob", "date", ""],
+                    ["NIN", "nin", "text", undefined],
+                    ["Date of birth", "dob", "date", undefined],
                   ] as const
                 ).map(([label, key, type, err]) => (
                   <label key={key} className="block">
