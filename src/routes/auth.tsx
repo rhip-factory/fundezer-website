@@ -43,7 +43,7 @@ function AuthPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: next ?? "/wallet" });
+      if (data.session) navigate({ to: (next ?? "/wallet") as "/wallet" });
     });
   }, [navigate, next]);
 
@@ -76,7 +76,7 @@ function AuthPage() {
         if (error) throw error;
       }
       const { data } = await supabase.auth.getSession();
-      if (data.session) navigate({ to: next ?? "/wallet" });
+      if (data.session) navigate({ to: (next ?? "/wallet") as "/wallet" });
       else toast("Check your inbox to confirm your email, then sign in.");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Something went wrong.");
