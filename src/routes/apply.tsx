@@ -441,7 +441,7 @@ function Apply() {
                         placeholder={ph}
                         value={account[key]}
                         disabled={accountCreated}
-                        onChange={(e) => setAccount({ ...account, [key]: e.target.value })}
+                        onChange={(e) => setAccount((prev) => ({ ...prev, [key]: e.target.value }))}
                         className={field}
                       />
                       <FieldError>{errors[key]}</FieldError>
@@ -453,7 +453,7 @@ function Apply() {
                       type="password"
                       value={account.confirm}
                       disabled={accountCreated}
-                      onChange={(e) => setAccount({ ...account, confirm: e.target.value })}
+                      onChange={(e) => setAccount((prev) => ({ ...prev, confirm: e.target.value }))}
                       className={field}
                     />
                     <FieldError>{errors.confirm}</FieldError>
@@ -560,7 +560,7 @@ function Apply() {
                     <input
                       type={type}
                       value={details[key]}
-                      onChange={(e) => setDetails({ ...details, [key]: e.target.value })}
+                      onChange={(e) => setDetails((prev) => ({ ...prev, [key]: e.target.value }))}
                       className={field}
                     />
                     <FieldError>{err ? errors[err] : undefined}</FieldError>
@@ -570,7 +570,7 @@ function Apply() {
                   <Label>Gender</Label>
                   <select
                     value={details.gender}
-                    onChange={(e) => setDetails({ ...details, gender: e.target.value })}
+                    onChange={(e) => setDetails((prev) => ({ ...prev, gender: e.target.value }))}
                     className={field}
                   >
                     <option>Female</option>
@@ -583,7 +583,7 @@ function Apply() {
                   <input
                     type="text"
                     value={details.address}
-                    onChange={(e) => setDetails({ ...details, address: e.target.value })}
+                    onChange={(e) => setDetails((prev) => ({ ...prev, address: e.target.value }))}
                     className={field}
                   />
                   <FieldError>{errors.dAddress}</FieldError>
