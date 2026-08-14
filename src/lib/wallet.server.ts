@@ -49,7 +49,7 @@ export async function walletBalance(userId: string) {
   );
 }
 
-async function audit(userId: string, action: string, detail: Record<string, unknown>) {
+async function audit(userId: string, action: string, detail: Record<string, string | number | boolean>) {
   const db = await admin();
   await db.from("wallet_audit_log").insert({ user_id: userId, action, detail });
 }
