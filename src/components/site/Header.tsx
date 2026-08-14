@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 const links = [
   { to: "/campaigns", label: "Browse campaigns" },
@@ -14,6 +16,7 @@ const links = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { signedIn } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur">
@@ -89,13 +92,35 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
-            <Link
-              to="/login"
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-accent"
-            >
-              Log in
-            </Link>
+            {signedIn ? (
+              <>
+                <Link
+                  to="/wallet"
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-accent"
+                >
+                  Wallet
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpen(false);
+                    void supabase.auth.signOut();
+                  }}
+                  className="rounded-lg px-3 py-2.5 text-left text-sm font-medium text-muted-foreground hover:bg-accent"
+                >
+                  Log out
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/auth"
+                onClick={() => setOpen(false)}
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-accent"
+              >
+                Log in
+              </Link>
+            )}
             <Link
               to="/apply"
               onClick={() => setOpen(false)}
