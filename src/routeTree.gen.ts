@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ApplyRouteImport } from './routes/apply'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqsRouteImport } from './routes/faqs'
 import { Route as HospitalsRouteImport } from './routes/hospitals'
@@ -42,6 +43,11 @@ const AboutRoute = AboutRouteImport.update({
 const ApplyRoute = ApplyRouteImport.update({
   id: '/apply',
   path: '/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
   '/hospitals': typeof HospitalsRoute
@@ -150,6 +157,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
   '/hospitals': typeof HospitalsRoute
@@ -172,6 +180,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
   '/hospitals': typeof HospitalsRoute
@@ -195,6 +204,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/apply'
+    | '/auth'
     | '/contact'
     | '/faqs'
     | '/hospitals'
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/apply'
+    | '/auth'
     | '/contact'
     | '/faqs'
     | '/hospitals'
@@ -237,6 +248,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/apply'
+    | '/auth'
     | '/contact'
     | '/faqs'
     | '/hospitals'
@@ -259,6 +271,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ApplyRoute: typeof ApplyRoute
+  AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   FaqsRoute: typeof FaqsRoute
   HospitalsRoute: typeof HospitalsRoute
@@ -298,6 +311,13 @@ declare module '@tanstack/react-router' {
       path: '/apply'
       fullPath: '/apply'
       preLoaderRoute: typeof ApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -419,6 +439,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ApplyRoute: ApplyRoute,
+  AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   FaqsRoute: FaqsRoute,
   HospitalsRoute: HospitalsRoute,

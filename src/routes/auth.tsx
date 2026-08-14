@@ -5,7 +5,7 @@ import { ShieldCheck } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { supabase } from "@/integrations/supabase/client";
 
-type Search = { next?: string };
+type Search = { next?: string | undefined };
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): Search => ({
