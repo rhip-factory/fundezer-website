@@ -144,7 +144,7 @@ function Apply() {
   const [generating, setGenerating] = useState(false);
   const [aiWritten, setAiWritten] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [docs, setDocs] = useState<Errors>({});
+  const [docs, setDocs] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Errors>({});
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [account, setAccount] = useState({
