@@ -297,7 +297,7 @@ function Apply() {
     return (
       <PageShell>
         <section className="container-page max-w-2xl py-24 text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary-soft text-primary-deep">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-success text-success-foreground">
             <Check className="h-7 w-7" />
           </div>
           <h1 className="mt-6 font-display text-3xl font-semibold text-foreground">
