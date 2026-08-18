@@ -13,7 +13,9 @@ import {
 
 import { PageShell } from "@/components/site/PageShell";
 import { CampaignCard } from "@/components/site/CampaignCard";
+import { CauseCard } from "@/components/site/CauseCard";
 import { campaigns, hospitals } from "@/lib/data";
+import { causes } from "@/lib/causes";
 import heroImage from "@/assets/hero-care.jpg";
 import donorKnownImage from "@/assets/donor-known.jpg";
 import donorStrangerImage from "@/assets/donor-stranger.jpg";
