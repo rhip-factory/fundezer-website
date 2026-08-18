@@ -6,7 +6,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
 const links = [
-  { to: "/campaigns", label: "Browse campaigns" },
+  { to: "/campaigns", label: "Find a Patient" },
+  { to: "/causes", label: "Support a Cause" },
   { to: "/how-it-works", label: "How it works" },
   { to: "/hospitals", label: "Partner hospitals" },
   { to: "/success-stories", label: "Success stories" },
