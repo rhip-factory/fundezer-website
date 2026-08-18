@@ -7,6 +7,7 @@ import { ProgressBar } from "@/components/site/CampaignCard";
 import { campaigns, formatNaira, type Campaign } from "@/lib/data";
 import { journeyFor, privateName } from "@/lib/donor-store";
 import { getDonorOverview } from "@/lib/donor.functions";
+import { CauseDonationHistory } from "@/components/site/CauseDonationHistory";
 
 
 export const Route = createFileRoute("/_authenticated/my-impact/")({
@@ -86,7 +87,7 @@ function MyImpact() {
       </section>
 
       <section className="container-page py-14">
-        <h2 className="font-display text-2xl font-semibold text-foreground">Supported patients</h2>
+        <h2 className="font-display text-2xl font-semibold text-foreground">Patient donations</h2>
 
         {ready && items.length === 0 && (
           <div className="surface-card mt-8 p-10 text-center">
@@ -146,6 +147,8 @@ function MyImpact() {
           })}
         </div>
       </section>
+
+      <CauseDonationHistory />
     </PageShell>
   );
 }
