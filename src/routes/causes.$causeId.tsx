@@ -87,6 +87,7 @@ function CauseDetail() {
               <Link
                 to="/causes/donate/$causeId"
                 params={{ causeId: cause.id }}
+                search={{ recurring: false }}
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-lift transition-transform hover:-translate-y-0.5"
               >
                 Donate to This Cause <ArrowRight className="h-4 w-4" />

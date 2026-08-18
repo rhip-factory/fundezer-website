@@ -7,7 +7,7 @@ import { getCause, newReference, saveCauseDonation, type CauseDonation } from "@
 
 export const Route = createFileRoute("/causes/donate/$causeId")({
   validateSearch: (search: Record<string, unknown>) => ({
-    recurring: search.recurring === true || search.recurring === "true",
+    recurring: search["recurring"] === true || search["recurring"] === "true",
   }),
   loader: ({ params }) => {
     const cause = getCause(params.causeId);
