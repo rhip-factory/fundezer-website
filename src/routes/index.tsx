@@ -13,7 +13,9 @@ import {
 
 import { PageShell } from "@/components/site/PageShell";
 import { CampaignCard } from "@/components/site/CampaignCard";
+import { CauseCard } from "@/components/site/CauseCard";
 import { campaigns, hospitals } from "@/lib/data";
+import { causes } from "@/lib/causes";
 import heroImage from "@/assets/hero-care.jpg";
 import donorKnownImage from "@/assets/donor-known.jpg";
 import donorStrangerImage from "@/assets/donor-stranger.jpg";
@@ -229,6 +231,31 @@ function Index() {
               <CampaignCard key={c.id} campaign={c} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Support a Cause */}
+      <section className="container-page py-20 md:py-24">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="max-w-xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+              Support a Cause
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold text-foreground md:text-4xl">
+              Pooled funds for urgent health needs
+            </h2>
+          </div>
+          <Link
+            to="/causes"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+          >
+            Browse all causes <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {causes.slice(0, 3).map((c) => (
+            <CauseCard key={c.id} cause={c} />
+          ))}
         </div>
       </section>
 
