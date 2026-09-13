@@ -14,15 +14,23 @@ import {
 import { PageShell } from "@/components/site/PageShell";
 import { CampaignCard } from "@/components/site/CampaignCard";
 import { CauseCard } from "@/components/site/CauseCard";
-import { campaigns, hospitals } from "@/lib/data";
+import { hospitals } from "@/lib/data";
 import { causes } from "@/lib/causes";
+import { getPublicCampaigns } from "@/lib/public-campaigns.functions";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import heroImage from "@/assets/hero-care.jpg";
 import donorKnownImage from "@/assets/donor-known.jpg";
 import donorStrangerImage from "@/assets/donor-stranger.jpg";
 import donorCorporateImage from "@/assets/donor-corporate.jpg";
 import donorSpontaneousImage from "@/assets/donor-spontaneous.jpg";
 
+const featuredCampaignsQuery = queryOptions({
+  queryKey: ["public-campaigns"],
+  queryFn: () => getPublicCampaigns(),
+});
+
 export const Route = createFileRoute("/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(featuredCampaignsQuery),
   component: Index,
   head: () => ({
     meta: [
