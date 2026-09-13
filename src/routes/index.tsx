@@ -235,11 +235,23 @@ function Index() {
               Browse all campaigns <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featured.map((c) => (
-              <CampaignCard key={c.id} campaign={c} />
-            ))}
-          </div>
+          {featured.length === 0 ? (
+            <div className="surface-card mt-10 p-10 text-center">
+              <p className="font-display text-lg font-semibold text-foreground">
+                New campaigns are on the way
+              </p>
+              <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+                Hospital-verified campaigns are published after consent and review. Check back
+                soon, or register as a donor to be notified.
+              </p>
+            </div>
+          ) : (
+            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {featured.map((c) => (
+                <CampaignCard key={c.id} campaign={c} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
