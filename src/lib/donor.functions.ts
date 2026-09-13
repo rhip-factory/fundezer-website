@@ -36,7 +36,15 @@ export const getDonorOverview = createServerFn({ method: "GET" })
     return {
       profile: profile.data,
       balance: 0,
-      transactions: [] as const,
+      transactions: [] as Array<{
+        id: string;
+        kind: string;
+        direction: "credit" | "debit";
+        amount: number;
+        reference: string | null;
+        description: string | null;
+        created_at: string;
+      }>,
       donations: donationRows,
       plans: plans.data ?? [],
       notifications: (notifications.data ?? []).map((n) => ({
