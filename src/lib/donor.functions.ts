@@ -7,44 +7,46 @@ const visibility = z.enum(["public", "anonymous", "private"]);
 export const getDonorOverview = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { walletBalance, ensureWallet, milestonesFor } = await import("./wallet.server");
-    const { supabase, userId, claims } = context;
-    const email = (claims as { email?: string }).email ?? "";
-    await ensureWallet(userId, email, "");
+    const { milestonesFor } = await import("./wallet.server");
+    const { supabase, userId } = context;
 
-    const [profile, transactions, donations, plans, notifications, campaigns] = await Promise.all([
-      supabase.from("profiles").select("*").eq("id", userId).maybeSingle(),
-      supabase
-        .from("donor_wallet_transactions")
-        .select("id, kind, direction, amount, reference, campaign_id, description, created_at")
-        .order("created_at", { ascending: false })
-        .limit(50),
+    const [profile, donations, plans, notifications, campaigns] = await Promise.all([
+      supabase.from("profiles").select("*").eq("user_id", userId).maybeSingle(),
       supabase
         .from("donations")
-        .select("id, campaign_id, amount, visibility, created_at, reference, source")
+        .select(
+          "id, campaign_id, cause_id, amount, currency, donation_type, payment_status, payment_method, is_anonymous, message, created_at",
+        )
         .order("created_at", { ascending: false }),
       supabase.from("recurring_plans").select("*").order("created_at", { ascending: false }),
       supabase
-        .from("wallet_notifications")
-        .select("id, title, body, kind, read_at, created_at")
+        .from("notifications")
+        .select("id, notification_type, title, message, is_read, read_at, created_at")
         .order("created_at", { ascending: false })
         .limit(20),
       supabase
-        .from("campaigns")
-        .select("id, public_display_name, condition, hospital, goal, offline_raised, image, status"),
+        .from("public_campaigns")
+        .select("id, slug, public_title, target, status, published_at"),
     ]);
 
     const donationRows = donations.data ?? [];
     const totalGiven = donationRows.reduce((s, d) => s + Number(d.amount), 0);
-    const patients = new Set(donationRows.map((d) => d.campaign_id)).size;
+    const patients = new Set(donationRows.map((d) => d.campaign_id).filter(Boolean)).size;
 
     return {
       profile: profile.data,
-      balance: await walletBalance(userId),
-      transactions: transactions.data ?? [],
+      balance: 0,
+      transactions: [] as const,
       donations: donationRows,
       plans: plans.data ?? [],
-      notifications: notifications.data ?? [],
+      notifications: (notifications.data ?? []).map((n) => ({
+        id: n.id,
+        title: n.title,
+        body: n.message,
+        kind: n.notification_type,
+        read_at: n.read_at,
+        created_at: n.created_at,
+      })),
       campaigns: campaigns.data ?? [],
       totalGiven,
       patients,
@@ -56,19 +58,16 @@ export const topUpWallet = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: { amount: number; idempotencyKey: string }) =>
     z
-      .object({ amount: z.number().int().min(500).max(5_000_000), idempotencyKey: z.string().min(8).max(80) })
+      .object({
+        amount: z.number().int().min(500).max(5_000_000),
+        idempotencyKey: z.string().min(8).max(80),
+      })
       .parse(input),
   )
-  .handler(async ({ data, context }) => {
-    const { topUp } = await import("./wallet.server");
-    const email = (context.claims as { email?: string }).email ?? "";
-    return topUp({
-      userId: context.userId,
-      email,
-      fullName: "",
-      amount: data.amount,
-      idempotencyKey: data.idempotencyKey,
-    });
+  .handler(async () => {
+    throw new Error(
+      "Wallet top-ups are not available on the website yet — please donate directly by card or bank transfer.",
+    );
   });
 
 export const donateToCampaign = createServerFn({ method: "POST" })
@@ -80,7 +79,7 @@ export const donateToCampaign = createServerFn({ method: "POST" })
       visibility: "public" | "anonymous" | "private";
       displayName: string;
       message: string;
-      source: "wallet" | "card" | "transfer";
+      source: "card" | "transfer";
       idempotencyKey: string;
     }) =>
       z
@@ -90,7 +89,7 @@ export const donateToCampaign = createServerFn({ method: "POST" })
           visibility,
           displayName: z.string().trim().max(60),
           message: z.string().trim().max(500),
-          source: z.enum(["wallet", "card", "transfer"]),
+          source: z.enum(["card", "transfer"]),
           idempotencyKey: z.string().min(8).max(80),
         })
         .parse(input),
@@ -120,19 +119,33 @@ export const getDonationReceipt = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     const { data: donation } = await context.supabase
       .from("donations")
-      .select("id, campaign_id, amount, visibility, reference, source, created_at")
+      .select(
+        "id, campaign_id, cause_id, amount, currency, donation_type, payment_status, payment_method, is_anonymous, transaction_reference, created_at",
+      )
       .eq("id", data.donationId)
       .maybeSingle();
     if (!donation) return null;
-    const { data: campaign } = await context.supabase
-      .from("campaigns")
-      .select("id, public_display_name, condition, hospital, goal, offline_raised, image")
-      .eq("id", donation.campaign_id)
-      .maybeSingle();
-    const { data: totals } = await context.supabase.rpc("campaign_totals", {
-      _campaign_id: donation.campaign_id,
-    });
-    return { donation, campaign, totals: totals?.[0] ?? null };
+
+    const campaign = donation.campaign_id
+      ? (
+          await context.supabase
+            .from("public_campaigns")
+            .select("id, slug, public_title, target, status, published_at")
+            .eq("id", donation.campaign_id)
+            .maybeSingle()
+        ).data
+      : null;
+    const cause = donation.cause_id
+      ? (
+          await context.supabase
+            .from("causes")
+            .select("id, name")
+            .eq("id", donation.cause_id)
+            .maybeSingle()
+        ).data
+      : null;
+
+    return { donation, campaign, cause };
   });
 
 export const updateDonorProfile = createServerFn({ method: "POST" })
@@ -158,14 +171,8 @@ export const updateDonorProfile = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase
       .from("profiles")
-      .update({
-        full_name: data.fullName,
-        phone: data.phone,
-        update_channels: data.channels.length ? data.channels : ["Email"],
-        default_donation_visibility: data.defaultVisibility,
-        consent_communications: data.consentCommunications,
-      })
-      .eq("id", context.userId);
+      .update({ full_name: data.fullName, phone: data.phone })
+      .eq("user_id", context.userId);
     if (error) throw new Error("Could not save your preferences");
     return { ok: true };
   });
@@ -173,7 +180,11 @@ export const updateDonorProfile = createServerFn({ method: "POST" })
 export const saveRecurringPlan = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
-    (input: { amount: number; frequency: "weekly" | "monthly" | "quarterly"; status?: "active" | "paused" | "cancelled" }) =>
+    (input: {
+      amount: number;
+      frequency: "weekly" | "monthly" | "quarterly";
+      status?: "active" | "paused" | "cancelled";
+    }) =>
       z
         .object({
           amount: z.number().int().min(500).max(5_000_000),
@@ -184,38 +195,43 @@ export const saveRecurringPlan = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const frequency =
+      data.frequency === "weekly" ? "Weekly" : data.frequency === "monthly" ? "Monthly" : "Quarterly";
+    const status =
+      data.status === "cancelled" ? "Cancelled" : data.status === "paused" ? "Paused" : "Active";
     const days = data.frequency === "weekly" ? 7 : data.frequency === "monthly" ? 30 : 90;
     const next = new Date(Date.now() + days * 86_400_000).toISOString().slice(0, 10);
+
     const existing = await supabaseAdmin
       .from("recurring_plans")
       .select("id")
-      .eq("user_id", context.userId)
-      .neq("status", "cancelled")
+      .eq("donor_user_id", context.userId)
+      .neq("status", "Cancelled")
       .maybeSingle();
 
     if (existing.data) {
       await supabaseAdmin
         .from("recurring_plans")
-        .update({ amount: data.amount, frequency: data.frequency, status: data.status ?? "active", next_charge_date: next })
+        .update({ amount: data.amount, frequency, status, next_run_on: next })
         .eq("id", existing.data.id)
-        .eq("user_id", context.userId);
+        .eq("donor_user_id", context.userId);
     } else {
       await supabaseAdmin.from("recurring_plans").insert({
-        user_id: context.userId,
+        donor_user_id: context.userId,
         amount: data.amount,
-        frequency: data.frequency,
-        status: data.status ?? "active",
-        next_charge_date: next,
+        frequency,
+        status,
+        next_run_on: next,
       });
     }
-    await supabaseAdmin.from("wallet_notifications").insert({
-      user_id: context.userId,
+    await supabaseAdmin.from("notifications").insert({
+      recipient_user_id: context.userId,
+      notification_type: "recurring",
       title: data.status === "cancelled" ? "Recurring giving cancelled" : "Recurring giving updated",
-      body:
+      message:
         data.status === "cancelled"
           ? "Your recurring contribution has been cancelled. You can restart it any time."
           : `₦${data.amount.toLocaleString("en-NG")} ${data.frequency}, next on ${next}.`,
-      kind: "recurring",
     });
     return { ok: true };
   });
@@ -223,10 +239,11 @@ export const saveRecurringPlan = createServerFn({ method: "POST" })
 export const markNotificationsRead = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    await context.supabase
-      .from("wallet_notifications")
-      .update({ read_at: new Date().toISOString() })
-      .eq("user_id", context.userId)
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    await supabaseAdmin
+      .from("notifications")
+      .update({ is_read: true, read_at: new Date().toISOString() })
+      .eq("recipient_user_id", context.userId)
       .is("read_at", null);
     return { ok: true };
   });
