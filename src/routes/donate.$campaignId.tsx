@@ -280,6 +280,3 @@ function DonatePage() {
     </PageShell>
   );
 }
-
-// Re-exported so fast-refresh keeps a stable module shape.
-export { supabase as _donateSupabase };
