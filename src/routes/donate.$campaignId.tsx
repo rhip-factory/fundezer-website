@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { BadgeCheck, Lock } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { formatNaira, formatShort } from "@/lib/data";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { donateToCampaign, getDonorOverview } from "@/lib/donor.functions";
 import { getPublicCampaign } from "@/lib/public-campaigns.functions";
