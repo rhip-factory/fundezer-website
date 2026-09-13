@@ -3,12 +3,9 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { HeartHandshake } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
-import { ProgressBar } from "@/components/site/CampaignCard";
-import { campaigns, formatNaira, type Campaign } from "@/lib/data";
-import { journeyFor, privateName } from "@/lib/donor-store";
+import { formatNaira } from "@/lib/data";
 import { getDonorOverview } from "@/lib/donor.functions";
 import { CauseDonationHistory } from "@/components/site/CauseDonationHistory";
-
 
 export const Route = createFileRoute("/_authenticated/my-impact/")({
   component: MyImpact,
@@ -38,20 +35,20 @@ function MyImpact() {
 
   const byCampaign = new Map<string, number>();
   for (const d of data?.donations ?? []) {
+    if (!d.campaign_id) continue;
     byCampaign.set(d.campaign_id, (byCampaign.get(d.campaign_id) ?? 0) + Number(d.amount));
   }
   const items = [...byCampaign.entries()]
     .map(([campaignId, given]) => {
-      const campaign = campaigns.find((c) => c.id === campaignId);
+      const campaign = (data?.campaigns ?? []).find((c) => c.id === campaignId);
       return campaign ? { campaign, given } : null;
     })
-    .filter((v): v is { campaign: Campaign; given: number } => v !== null);
+    .filter((v): v is { campaign: NonNullable<typeof v>["campaign"]; given: number } => v !== null);
 
   const ready = !isLoading;
   const totalGiven = data?.totalGiven ?? 0;
-  const active = items.filter((i) => i.campaign.raised < i.campaign.goal).length;
-  const completed = items.length - active;
-
+  const completed = items.filter((i) => i.campaign.status === "Completed").length;
+  const active = items.length - completed;
 
   return (
     <PageShell>
@@ -109,42 +106,34 @@ function MyImpact() {
         )}
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
-          {items.map(({ campaign, given }) => {
-            const pct = Math.round((campaign.raised / campaign.goal) * 100);
-            const journey = journeyFor(campaign);
-            return (
-              <div key={campaign.id} className="surface-card p-6">
-                <h3 className="font-display text-lg font-semibold text-foreground">
-                  {privateName(campaign.patient)}
-                </h3>
-                <p className="mt-1 text-sm text-muted-foreground">{campaign.hospital}</p>
-                <p className="mt-1 text-sm text-muted-foreground">{campaign.condition}</p>
-                <div className="mt-5">
-                  <ProgressBar value={pct} />
-                </div>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  {formatNaira(campaign.raised)} / {formatNaira(campaign.goal)}
-                </p>
-                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-                  <span className="font-semibold text-primary">{pct}% funded</span>
-                  <span className="text-muted-foreground">
-                    Current stage:{" "}
-                    <span className="font-semibold text-foreground">{journey.stage}</span>
+          {items.map(({ campaign, given }) => (
+            <div key={campaign.id} className="surface-card p-6">
+              <h3 className="font-display text-lg font-semibold text-foreground">
+                {campaign.public_title}
+              </h3>
+              <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-3 py-1 text-xs font-semibold text-primary-deep">
+                  {campaign.status === "Completed" ? "Campaign completed" : "Funding now"}
+                </span>
+                <span className="text-muted-foreground">
+                  Goal:{" "}
+                  <span className="font-semibold text-foreground">
+                    {formatNaira(Number(campaign.target ?? 0))}
                   </span>
-                </div>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  You gave <span className="font-semibold text-foreground">{formatNaira(given)}</span>
-                </p>
-                <Link
-                  to="/my-impact/$campaignId"
-                  params={{ campaignId: campaign.id }}
-                  className="mt-6 inline-flex rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
-                >
-                  View progress
-                </Link>
+                </span>
               </div>
-            );
-          })}
+              <p className="mt-4 text-sm text-muted-foreground">
+                You gave <span className="font-semibold text-foreground">{formatNaira(given)}</span>
+              </p>
+              <Link
+                to="/my-impact/$campaignId"
+                params={{ campaignId: campaign.id! }}
+                className="mt-6 inline-flex rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
+              >
+                View progress
+              </Link>
+            </div>
+          ))}
         </div>
       </section>
 
