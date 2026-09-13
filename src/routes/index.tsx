@@ -121,7 +121,8 @@ const donorGroups = [
 
 
 function Index() {
-  const featured = campaigns.slice(0, 3);
+  const { data: publicCampaigns } = useSuspenseQuery(featuredCampaignsQuery);
+  const featured = publicCampaigns.slice(0, 3);
 
   return (
     <PageShell>
