@@ -64,14 +64,11 @@ function WalletPage() {
   useEffect(() => {
     if (!data?.profile) return;
     setFullName(data.profile.full_name);
-    setPhone(data.profile.phone);
-    setPrefs(data.profile.update_channels ?? ["Email"]);
-    setVisibility(data.profile.default_donation_visibility as "public" | "anonymous" | "private");
-    setConsent(data.profile.consent_communications);
+    setPhone(data.profile.phone ?? "");
     const plan = data.plans[0];
     if (plan) {
       setPlanAmount(Number(plan.amount));
-      setFrequency(plan.frequency as "weekly" | "monthly" | "quarterly");
+      setFrequency(plan.frequency.toLowerCase() as "weekly" | "monthly" | "quarterly");
     }
   }, [data]);
 
