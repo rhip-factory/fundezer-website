@@ -109,10 +109,10 @@ function ThankYou() {
             </p>
           )}
           <div className="mt-8 flex flex-wrap gap-3">
-            {campaignRef && (
+            {campaignRef && campaign && (
               <Link
                 to="/my-impact/$campaignId"
-                params={{ campaignId: campaign.id! }}
+                params={{ campaignId: campaign.id }}
                 className="rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
               >
                 View the patient&rsquo;s journey

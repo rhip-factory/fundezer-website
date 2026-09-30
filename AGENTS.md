@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Project architecture
+
+- Public campaign UI reads only through `public_campaigns` and `public_campaign_updates`; these views enforce publication consent and prevent private patient data from reaching the website.

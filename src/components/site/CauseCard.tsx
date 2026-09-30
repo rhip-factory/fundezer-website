@@ -8,18 +8,18 @@ export function CauseCard({ cause }: { cause: Cause }) {
   const pct = causeProgress(cause);
 
   return (
-    <div className="group flex flex-col overflow-hidden surface-card transition-all hover:-translate-y-1 hover:shadow-lift">
+    <div className="group flex flex-col overflow-hidden border-t-4 border-accent bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift">
       <img
         src={cause.image}
         alt={`${cause.name} at a FundEzer partner hospital`}
         width={1200}
         height={800}
         loading="lazy"
-        className="h-40 w-full object-cover"
+        className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
       />
 
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="font-display text-lg font-semibold text-foreground">{cause.name}</h3>
+        <h3 className="font-display text-xl font-bold text-foreground">{cause.name}</h3>
         <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
           {cause.short}
         </p>
@@ -44,7 +44,7 @@ export function CauseCard({ cause }: { cause: Cause }) {
           <Link
             to="/causes/$causeId"
             params={{ causeId: cause.id }}
-            className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
+            className="mt-5 inline-flex w-full items-center justify-center bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
           >
             Support This Cause
           </Link>

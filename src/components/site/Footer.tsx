@@ -36,28 +36,28 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-border bg-card">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <footer className="mt-24 border-t-4 border-primary bg-foreground text-background">
+      <div className="container-page grid gap-12 py-16 md:grid-cols-[1.5fr_1fr_1fr_1fr] md:py-20">
         <div>
           <Logo />
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-background/65">
             Africa's trust-first healthcare crowdfunding platform. Donations are paid directly to
             verified hospitals, never to individuals.
           </p>
-          <p className="mt-4 text-xs font-medium uppercase tracking-widest text-primary">
+          <p className="mt-7 text-xs font-semibold uppercase tracking-[0.16em] text-background/80">
             Abuja pilot · Nigeria
           </p>
         </div>
 
         {columns.map((col) => (
           <div key={col.title}>
-            <h3 className="text-sm font-semibold text-foreground">{col.title}</h3>
+            <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-background">{col.title}</h3>
             <ul className="mt-4 space-y-2.5">
               {col.links.map((l) => (
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    className="text-sm text-background/60 transition-colors hover:text-background"
                   >
                     {l.label}
                   </Link>
@@ -68,8 +68,8 @@ export function Footer() {
         ))}
       </div>
 
-      <div className="border-t border-border">
-        <div className="container-page flex flex-col gap-2 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t border-background/15">
+        <div className="container-page flex flex-col gap-2 py-6 text-xs text-background/55 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} FundEzer. All rights reserved.</p>
           <p>Funds are disbursed to hospitals against approved treatment milestones.</p>
         </div>

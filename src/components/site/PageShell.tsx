@@ -22,13 +22,15 @@ export function PageHero({
   description: string;
 }) {
   return (
-    <section className="border-b border-border bg-[image:var(--gradient-soft)]">
-      <div className="container-page py-16 md:py-20">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{eyebrow}</p>
-        <h1 className="mt-3 max-w-3xl text-4xl font-semibold leading-[1.1] text-foreground md:text-5xl">
+    <section className="overflow-hidden border-b border-border bg-primary-soft/45">
+      <div className="container-page grid gap-8 py-14 md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.45fr)] md:items-end md:py-20">
+        <div>
+        <p className="editorial-kicker">{eyebrow}</p>
+        <h1 className="mt-5 max-w-4xl text-4xl font-bold leading-[1.06] text-foreground md:text-6xl">
           {title === "A guided application, reviewed by your hospital" ? "A guided campaign setup, reviewed by your hospital" : title}
         </h1>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+        </div>
+        <p className="section-rule max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
           {description}
         </p>
       </div>
