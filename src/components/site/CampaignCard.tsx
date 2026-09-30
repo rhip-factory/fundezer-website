@@ -27,9 +27,9 @@ export function CampaignCard({ campaign }: { campaign: PublicCampaign }) {
     <Link
       to="/campaigns/$campaignId"
       params={{ campaignId: campaign.slug ?? campaign.id }}
-      className="group flex flex-col overflow-hidden surface-card transition-all hover:-translate-y-1 hover:shadow-lift"
+      className="group flex flex-col overflow-hidden border-t-4 border-primary bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
     >
-      <div className="relative flex h-40 items-center justify-center overflow-hidden bg-[image:var(--gradient-primary)]">
+      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-[image:var(--gradient-primary)]">
         {campaign.imageUrl ? (
           <img
             src={campaign.imageUrl}
@@ -42,16 +42,16 @@ export function CampaignCard({ campaign }: { campaign: PublicCampaign }) {
             {initials}
           </span>
         )}
-        <span className="absolute left-4 top-4 rounded-full bg-card/95 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-secondary-foreground">
+        <span className="absolute left-4 top-4 bg-card/95 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-secondary-foreground">
           {campaign.status === "Completed" ? "Completed" : "Funding now"}
         </span>
-        <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-card/95 px-2.5 py-1 text-[0.65rem] font-semibold text-primary">
+        <span className="absolute right-4 top-4 flex items-center gap-1 bg-card/95 px-2.5 py-1 text-[0.65rem] font-semibold text-primary">
           <BadgeCheck className="h-3.5 w-3.5" /> Hospital verified
         </span>
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="font-display text-lg font-semibold text-foreground">{campaign.title}</h3>
+        <h3 className="font-display text-xl font-bold leading-tight text-foreground">{campaign.title}</h3>
         {campaign.causeName && (
           <p className="mt-1 text-sm font-medium text-primary">{campaign.causeName}</p>
         )}

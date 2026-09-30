@@ -500,9 +500,11 @@ function SignupSection() {
       return;
     }
     setSubmitting(true);
-    const { error } = await supabase
-      .from("partner_donor_signups")
-      .insert({ email: trimmed, interests });
+    const { error } = await supabase.from("app_settings").insert({
+      key: `partner-donor-signup-${crypto.randomUUID()}`,
+      value: { email: trimmed, interests },
+      description: "Partner donor website signup",
+    });
     setSubmitting(false);
     if (error) {
       toast.error("Something went wrong. Please try again.");

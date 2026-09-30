@@ -1,8 +1,7 @@
-# Roadmap — Connect website to FundEzer backend (btdhnaajdbrwvhgoxyqs)
+# Roadmap — FundEzer backend and website redesign
 
-- [ ] Grant read access to existing `public_campaigns` / `public_campaign_updates` views + gatekeeper functions (no schema changes)
-- [ ] Add server fn to fetch public campaigns (safe fields only)
-- [ ] Point campaign listing + detail pages at backend data, preserving UI
-- [ ] Keep donor flow (donate → thank-you → My Impact) intact
-- [ ] Verify: listing, details, multiple campaigns, public/private gating, persistence, Donor Portal connection
-- [ ] Report connected vs remaining mock data
+- [x] Grant read access to consent-gated public campaign views
+- [x] Fetch safe, donor-facing campaign fields from the backend
+- [x] Point campaign listing, detail, home and donor journey pages at backend data
+- [ ] Apply the editorial-warmth visual system across shared website surfaces
+- [ ] Verify public campaign gating, key donor flows, desktop and mobile presentation

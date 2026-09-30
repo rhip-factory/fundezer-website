@@ -7,7 +7,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
       <img src={icon.url} alt="FundEzer logo" width={40} height={40} className="h-9 w-9" />
       {!compact && (
         <span className="leading-none">
-          <span className="font-display text-xl font-semibold tracking-tight text-muted-foreground">
+          <span className="font-display text-xl font-extrabold text-foreground">
             fund<span className="text-primary">E</span>zer<span className="text-primary">.</span>
           </span>
           <span className="mt-0.5 block text-[0.6rem] font-medium uppercase tracking-[0.2em] text-primary/80">

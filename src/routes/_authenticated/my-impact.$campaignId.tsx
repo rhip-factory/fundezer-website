@@ -82,7 +82,7 @@ function PatientProgress() {
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
                 Latest update
               </p>
-              <p className="mt-3 text-xs text-muted-foreground">{formatDate(latest.publishedAt)}</p>
+              <p className="mt-3 text-xs text-muted-foreground">{latest.publishedAt ? formatDate(latest.publishedAt) : "Recently published"}</p>
               <h2 className="mt-1 font-display text-xl font-semibold text-foreground">
                 {latest.title}
               </h2>
@@ -113,7 +113,7 @@ function PatientProgress() {
                     <span className="absolute -left-[1.9rem] top-1.5 h-2.5 w-2.5 rounded-full bg-primary" />
                     <p className="font-display font-semibold text-foreground">{u.title}</p>
                     <p className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
-                      {formatDate(u.publishedAt)}
+                      {u.publishedAt ? formatDate(u.publishedAt) : "Recently published"}
                     </p>
                     <p className="mt-1.5 text-sm text-muted-foreground">{u.content}</p>
                   </li>

@@ -238,10 +238,10 @@ function WalletPage() {
                 </select>
               </label>
             </div>
-            {plan && plan.status !== "cancelled" && (
+            {plan && plan.status !== "Cancelled" && (
               <p className="mt-3 text-sm text-muted-foreground">
                 Current plan: <span className="font-semibold text-foreground">{plan.status}</span> —
-                next on {plan.next_charge_date}
+                next on {plan.next_run_on ?? "schedule pending"}
               </p>
             )}
             <div className="mt-5 flex flex-wrap gap-3">
@@ -250,9 +250,9 @@ function WalletPage() {
                 onClick={() => planMutation.mutate("active")}
                 className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft"
               >
-                {plan && plan.status !== "cancelled" ? "Update plan" : "Start recurring giving"}
+                {plan && plan.status !== "Cancelled" ? "Update plan" : "Start recurring giving"}
               </button>
-              {plan && plan.status === "active" && (
+              {plan && plan.status === "Active" && (
                 <button
                   type="button"
                   onClick={() => planMutation.mutate("paused")}
@@ -261,7 +261,7 @@ function WalletPage() {
                   Pause
                 </button>
               )}
-              {plan && plan.status !== "cancelled" && (
+              {plan && plan.status !== "Cancelled" && (
                 <button
                   type="button"
                   onClick={() => planMutation.mutate("cancelled")}

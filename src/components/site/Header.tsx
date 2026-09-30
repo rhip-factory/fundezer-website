@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
-const links = [
+const primaryLinks = [
   { to: "/campaigns", label: "Find a Patient" },
   { to: "/causes", label: "Support a Cause" },
   { to: "/how-it-works", label: "How it works" },
   { to: "/hospitals", label: "Partner hospitals" },
+] as const;
+
+const moreLinks = [
   { to: "/success-stories", label: "Success stories" },
-  { to: "/my-impact", label: "My Impact" },
-  { to: "/about", label: "About" },
+  { to: "/partner-donor", label: "Partner donors" },
+  { to: "/about", label: "About FundEzer" },
 ] as const;
 
 export function Header() {
@@ -20,20 +23,30 @@ export function Header() {
   const { signedIn } = useAuth();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur">
-      <div className="container-page flex h-18 items-center justify-between gap-6 py-3">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-md">
+      <div className="container-page flex min-h-20 items-center justify-between gap-6 py-3">
         <Logo />
 
-        <nav className="hidden items-center gap-7 lg:flex">
-          {links.map((l) => (
+        <nav className="hidden items-center gap-6 lg:flex">
+          {primaryLinks.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary [&.active]:text-primary"
+              className="border-b border-transparent py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary [&.active]:border-primary [&.active]:text-foreground"
             >
               {l.label}
             </Link>
           ))}
+          <div className="group relative">
+            <button type="button" className="inline-flex items-center gap-1 py-2 text-sm font-semibold text-muted-foreground hover:text-primary">
+              More <ChevronDown className="h-3.5 w-3.5" />
+            </button>
+            <div className="invisible absolute left-1/2 top-full w-48 -translate-x-1/2 border border-border bg-card p-2 opacity-0 shadow-lift transition-all group-hover:visible group-hover:opacity-100">
+              {moreLinks.map((l) => (
+                <Link key={l.to} to={l.to} className="block px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground">{l.label}</Link>
+              ))}
+            </div>
+          </div>
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
@@ -41,14 +54,14 @@ export function Header() {
             <>
               <Link
                 to="/wallet"
-                className="rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
+                className="px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:text-primary"
               >
                 Wallet
               </Link>
               <button
                 type="button"
                 onClick={() => supabase.auth.signOut()}
-                className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="px-3 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
               >
                 Log out
               </button>
@@ -56,14 +69,14 @@ export function Header() {
           ) : (
             <Link
               to="/auth"
-              className="rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
+              className="px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:text-primary"
             >
               Log in
             </Link>
           )}
           <Link
             to="/apply"
-            className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
+            className="bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
           >
             Start a Campaign
           </Link>
@@ -83,7 +96,7 @@ export function Header() {
       {open && (
         <div className="border-t border-border bg-card lg:hidden">
           <div className="container-page flex flex-col gap-1 py-4">
-            {links.map((l) => (
+            {[...primaryLinks, ...moreLinks].map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
@@ -93,6 +106,7 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
+            <Link to="/my-impact" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-accent">My Impact</Link>
             {signedIn ? (
               <>
                 <Link
