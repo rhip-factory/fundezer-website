@@ -3,6 +3,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { PageShell } from "@/components/site/PageShell";
 import { supabase } from "@/integrations/supabase/client";
+import { hasOngoingCampaign, openPatientPortal } from "@/lib/patient-portal";
 
 export const Route = createFileRoute("/login")({
   component: Login,
@@ -38,6 +39,10 @@ function Login() {
       const { data, error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
       if (error) throw error;
       const type = data.user?.user_metadata?.["user_type"];
+      if (await hasOngoingCampaign()) {
+        toast.success("Welcome back. Opening your patient dashboard…");
+        if (await openPatientPortal()) return;
+      }
       toast.success("Welcome back.");
       navigate({ to: type === "Patient" ? "/apply" : "/wallet" });
     } catch (err) {
