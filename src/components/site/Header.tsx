@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { hasOngoingCampaign, openPatientPortal } from "@/lib/patient-portal";
 
 const primaryLinks = [
   { to: "/campaigns", label: "Find a Patient" },
@@ -20,7 +21,22 @@ const moreLinks = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const { signedIn } = useAuth();
+  const { signedIn, user } = useAuth();
+  const [isPatient, setIsPatient] = useState(false);
+
+  useEffect(() => {
+    if (!user) { setIsPatient(false); return; }
+    let active = true;
+    hasOngoingCampaign().then((v) => { if (active) setIsPatient(v); });
+    return () => { active = false; };
+  }, [user]);
+
+  const dashboardButton = (cls: string) =>
+    isPatient ? (
+      <button type="button" onClick={() => { setOpen(false); void openPatientPortal(); }} className={cls}>
+        Patient dashboard
+      </button>
+    ) : null;
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-md">
@@ -52,6 +68,7 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           {signedIn ? (
             <>
+              {dashboardButton("px-3 py-2 text-sm font-semibold text-primary transition-colors hover:text-primary-deep")}
               <Link
                 to="/wallet"
                 className="px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:text-primary"
