@@ -39,9 +39,9 @@ function Register() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = email.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return toast.error("Please enter a valid email address.");
-    if (!/^(\+234|0)[789][01]\d{8}$/.test(phone.replace(/\s/g, ""))) return toast.error("Please enter a valid Nigerian phone number.");
-    if (password.length < 8) return toast.error("Password must be at least 8 characters.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) { toast.error("Please enter a valid email address."); return; }
+    if (!/^(\+234|0)[789][01]\d{8}$/.test(phone.replace(/\s/g, ""))) { toast.error("Please enter a valid Nigerian phone number."); return; }
+    if (password.length < 8) { toast.error("Password must be at least 8 characters."); return; }
     setBusy(true);
     try {
       const { data, error } = await supabase.auth.signUp({
