@@ -1,7 +1,8 @@
 # Roadmap — FundEzer backend and website redesign
 
-- [ ] Finish patient dashboard routing and session handoff checks
-- [ ] Compress signed-in header navigation and add mobile patient dashboard access
+- [x] Route both login entry points using the account's own ongoing campaigns
+- [ ] Verify signed-in portal handoff — blocked by portal access denied (403) and unavailable authenticated testing for the external connection
+- [x] Compress signed-in header navigation and add mobile patient dashboard access
 
 - [x] Grant read access to consent-gated public campaign views
 - [x] Fetch safe, donor-facing campaign fields from the backend
