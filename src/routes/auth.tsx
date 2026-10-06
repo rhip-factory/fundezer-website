@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { ShieldCheck } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import { supabase } from "@/integrations/supabase/client";
+import { hasOngoingCampaign, openPatientPortal } from "@/lib/patient-portal";
 
 type Search = { next?: string | undefined };
 
@@ -42,9 +43,15 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: (next ?? "/wallet") as "/wallet" });
+    let active = true;
+    supabase.auth.getSession().then(async ({ data }) => {
+      if (!data.session) return;
+      const isPatient = await hasOngoingCampaign();
+      if (!active) return;
+      if (isPatient && await openPatientPortal()) return;
+      navigate({ to: (next ?? "/wallet") as "/wallet" });
     });
+    return () => { active = false; };
   }, [navigate, next]);
 
   const submit = async (e: React.FormEvent) => {
@@ -76,7 +83,13 @@ function AuthPage() {
         if (error) throw error;
       }
       const { data } = await supabase.auth.getSession();
-      if (data.session) navigate({ to: (next ?? "/wallet") as "/wallet" });
+      if (data.session) {
+        if (await hasOngoingCampaign()) {
+          toast.success("Welcome back. Opening your patient dashboard…");
+          if (await openPatientPortal()) return;
+        }
+        navigate({ to: (next ?? "/wallet") as "/wallet" });
+      }
       else toast("Check your inbox to confirm your email, then sign in.");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Something went wrong.");
