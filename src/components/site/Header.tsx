@@ -63,7 +63,6 @@ export function Header() {
         <div className="hidden shrink-0 items-center gap-1 whitespace-nowrap xl:flex">
           {signedIn ? (
             <>
-              {dashboardButton("px-3 py-2 text-sm font-semibold text-primary transition-colors hover:text-primary-deep")}
               <Link
                 to="/wallet"
                 className="px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:text-primary"
@@ -86,12 +85,14 @@ export function Header() {
               Log in
             </Link>
           )}
+          {isPatient ? dashboardButton("h-auto rounded-none bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-soft hover:bg-primary hover:text-primary-foreground") : (
           <Link
             to="/apply"
             className="bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
           >
             Start a Campaign
           </Link>
+          )}
         </div>
 
 
@@ -122,7 +123,6 @@ export function Header() {
             <Link to="/my-impact" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-accent">My Impact</Link>
             {signedIn ? (
               <>
-                {dashboardButton("h-auto justify-start px-3 py-2.5 text-sm font-semibold text-primary")}
                 <Link
                   to="/wallet"
                   onClick={() => setOpen(false)}
@@ -150,6 +150,7 @@ export function Header() {
                 Log in
               </Link>
             )}
+            {isPatient ? dashboardButton("mt-2 h-auto rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary hover:text-primary-foreground") : (
             <Link
               to="/apply"
               onClick={() => setOpen(false)}
@@ -157,6 +158,7 @@ export function Header() {
             >
               Start a Campaign
             </Link>
+            )}
           </div>
         </div>
       )}
