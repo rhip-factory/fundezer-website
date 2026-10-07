@@ -173,6 +173,18 @@ function Apply() {
   const words = wordCount(story);
   const progress = Math.round((step / (steps.length - 1)) * 100);
 
+  // One ongoing campaign per account: send existing patients to their dashboard
+  useEffect(() => {
+    let active = true;
+    void import("@/lib/patient-portal").then(async ({ hasOngoingCampaign, openPatientPortal }) => {
+      if (active && (await hasOngoingCampaign())) {
+        toast("You already have a campaign in progress. Opening your patient dashboard…");
+        await openPatientPortal();
+      }
+    });
+    return () => { active = false; };
+  }, []);
+
   // Restore draft
   useEffect(() => {
     try {
