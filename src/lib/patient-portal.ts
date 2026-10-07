@@ -1,7 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 /** Stable address of the separate FundEzer Patient Portal app (shares this backend). */
-export const PATIENT_PORTAL_URL = "https://project--a31a67a4-94f1-4bbb-9ef4-5bd50869deb5.lovable.app";
+export const PATIENT_PORTAL_URL = "https://fundezer-patient-portal.lovable.app";
 
 /** Campaign statuses that count as "ongoing" for routing a patient to their dashboard. */
 export const ONGOING_CAMPAIGN_STATUSES = ["Draft", "Under Review", "Active"] as const;
