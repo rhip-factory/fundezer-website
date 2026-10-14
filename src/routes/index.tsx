@@ -1,3 +1,5 @@
+import { useEffect, type CSSProperties } from "react";
+
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   BadgeCheck,
@@ -28,6 +30,31 @@ const featuredCampaignsQuery = queryOptions({
   queryKey: ["public-campaigns"],
   queryFn: () => getPublicCampaigns(),
 });
+
+const revealDelay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
+
+function useRevealOnScroll() {
+  useEffect(() => {
+    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    if (!("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
 
 export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(featuredCampaignsQuery),
@@ -123,13 +150,14 @@ const donorGroups = [
 function Index() {
   const { data: publicCampaigns } = useSuspenseQuery(featuredCampaignsQuery);
   const featured = publicCampaigns.slice(0, 3);
+  useRevealOnScroll();
 
   return (
     <PageShell>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border bg-[image:var(--gradient-soft)]">
         <div className="container-page grid items-center gap-12 py-16 md:py-24 lg:grid-cols-[1.05fr_1fr]">
-          <div>
+          <div data-reveal>
             <span className="inline-flex items-center gap-2 rounded-full bg-primary-soft px-3.5 py-1.5 text-xs font-semibold text-primary-deep">
               <BadgeCheck className="h-3.5 w-3.5" /> Abuja pilot · 4 verified partner hospitals
             </span>
@@ -171,7 +199,7 @@ function Index() {
             </dl>
           </div>
 
-          <div className="relative">
+          <div className="relative" data-reveal style={revealDelay(150)}>
             <img
               src={heroImage}
               alt="A nurse reassuring a patient in an Abuja partner hospital"
@@ -193,7 +221,7 @@ function Index() {
 
       {/* Trust pillars */}
       <section className="container-page py-20 md:py-24">
-        <div className="max-w-2xl">
+        <div className="max-w-2xl" data-reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
             Why donors trust FundEzer
           </p>
@@ -202,8 +230,8 @@ function Index() {
           </h2>
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {pillars.map((p) => (
-            <div key={p.title} className="surface-card p-6">
+          {pillars.map((p, i) => (
+            <div key={p.title} className="surface-card p-6" data-reveal style={revealDelay(i * 80)}>
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft text-primary-deep">
                 <p.icon className="h-5 w-5" />
               </div>
@@ -219,7 +247,7 @@ function Index() {
       {/* Featured campaigns */}
       <section className="border-y border-border bg-card py-20 md:py-24">
         <div className="container-page">
-          <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
             <div className="max-w-xl">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
                 Verified campaigns
@@ -236,7 +264,7 @@ function Index() {
             </Link>
           </div>
           {featured.length === 0 ? (
-            <div className="surface-card mt-10 p-10 text-center">
+            <div className="surface-card mt-10 p-10 text-center" data-reveal>
               <p className="font-display text-lg font-semibold text-foreground">
                 New campaigns are on the way
               </p>
@@ -247,8 +275,10 @@ function Index() {
             </div>
           ) : (
             <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {featured.map((c) => (
-                <CampaignCard key={c.id} campaign={c} />
+              {featured.map((c, i) => (
+                <div key={c.id} data-reveal style={revealDelay(i * 100)}>
+                  <CampaignCard campaign={c} />
+                </div>
               ))}
             </div>
           )}
@@ -257,7 +287,7 @@ function Index() {
 
       {/* Support a Cause */}
       <section className="container-page py-20 md:py-24">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
           <div className="max-w-xl">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
               Support a Cause
@@ -274,15 +304,17 @@ function Index() {
           </Link>
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {causes.slice(0, 3).map((c) => (
-            <CauseCard key={c.id} cause={c} />
+          {causes.slice(0, 3).map((c, i) => (
+            <div key={c.id} data-reveal style={revealDelay(i * 100)}>
+              <CauseCard cause={c} />
+            </div>
           ))}
         </div>
       </section>
 
       {/* How it works */}
       <section className="container-page py-20 md:py-24">
-        <div className="max-w-2xl">
+        <div className="max-w-2xl" data-reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
             How it works
           </p>
@@ -299,7 +331,7 @@ function Index() {
             ["Campaign goes live", "After fraud screening and hospital approval, the campaign publishes."],
             ["Hospital gets paid", "Funds are released per milestone and progress is posted to donors."],
           ].map(([title, body], i) => (
-            <li key={title} className="surface-card p-6">
+            <li key={title} className="surface-card p-6" data-reveal style={revealDelay((i % 3) * 80)}>
               <span className="font-display text-sm font-semibold text-primary">
                 Step {String(i + 1).padStart(2, "0")}
               </span>
@@ -321,7 +353,7 @@ function Index() {
 
       {/* Different people, one purpose */}
       <section className="container-page py-20 md:py-24">
-        <div className="max-w-2xl">
+        <div className="max-w-2xl" data-reveal>
           <h2 className="text-3xl font-semibold text-foreground md:text-4xl">
             Different People. One Purpose.
           </h2>
@@ -332,10 +364,12 @@ function Index() {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {donorGroups.map((g) => (
+          {donorGroups.map((g, i) => (
             <article
               key={g.title}
               className="surface-card group flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+              data-reveal
+              style={revealDelay(i * 80)}
             >
               <div className="overflow-hidden">
                 <img
@@ -369,13 +403,13 @@ function Index() {
 
 
       <section className="border-y border-border bg-card py-16">
-        <div className="container-page">
+        <div className="container-page" data-reveal>
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
             Founding partner hospitals · Abuja
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {hospitals.map((h) => (
-              <div key={h.id} className="rounded-2xl border border-border p-5 text-center">
+            {hospitals.map((h, i) => (
+              <div key={h.id} className="rounded-2xl border border-border p-5 text-center" data-reveal style={revealDelay(i * 70)}>
                 <p className="font-display font-semibold text-foreground">{h.name}</p>
                 <p className="mt-1 text-xs text-muted-foreground">{h.area}</p>
                 <p className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary">
@@ -389,7 +423,7 @@ function Index() {
 
       {/* CTA */}
       <section className="container-page py-20 md:py-24">
-        <div className="overflow-hidden rounded-3xl bg-[image:var(--gradient-primary)] px-8 py-14 text-center md:px-16">
+        <div className="overflow-hidden rounded-3xl bg-[image:var(--gradient-primary)] px-8 py-14 text-center md:px-16" data-reveal>
           <HeartHandshake className="mx-auto h-10 w-10 text-primary-foreground/90" />
           <h2 className="mx-auto mt-5 max-w-2xl text-3xl font-semibold text-primary-foreground md:text-4xl">
             Help from all. Treatment for one patient at a time.
