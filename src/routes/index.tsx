@@ -1,3 +1,5 @@
+import { useEffect, type CSSProperties } from "react";
+
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   BadgeCheck,
@@ -28,6 +30,31 @@ const featuredCampaignsQuery = queryOptions({
   queryKey: ["public-campaigns"],
   queryFn: () => getPublicCampaigns(),
 });
+
+const revealDelay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as CSSProperties;
+
+function useRevealOnScroll() {
+  useEffect(() => {
+    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    if (!("IntersectionObserver" in window)) {
+      els.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
 
 export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(featuredCampaignsQuery),
@@ -123,6 +150,7 @@ const donorGroups = [
 function Index() {
   const { data: publicCampaigns } = useSuspenseQuery(featuredCampaignsQuery);
   const featured = publicCampaigns.slice(0, 3);
+  useRevealOnScroll();
 
   return (
     <PageShell>
