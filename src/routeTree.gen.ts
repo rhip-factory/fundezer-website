@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -20,16 +21,46 @@ import { Route as HospitalsRouteImport } from './routes/hospitals'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PartnerDonorRouteImport } from './routes/partner-donor'
+import { Route as PortalRouteImport } from './routes/portal'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as SuccessStoriesRouteImport } from './routes/success-stories'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as AuthenticatedDonorRouteImport } from './routes/_authenticated/donor'
 import { Route as AuthenticatedWalletRouteImport } from './routes/_authenticated/wallet'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminApplicationsRouteImport } from './routes/admin.applications'
+import { Route as AdminAuditLogsRouteImport } from './routes/admin.audit-logs'
+import { Route as AdminCampaignsRouteImport } from './routes/admin.campaigns'
+import { Route as AdminCausesRouteImport } from './routes/admin.causes'
+import { Route as AdminDonationsRouteImport } from './routes/admin.donations'
+import { Route as AdminHospitalsRouteImport } from './routes/admin.hospitals'
+import { Route as AdminPatientsRouteImport } from './routes/admin.patients'
+import { Route as AdminProfileRouteImport } from './routes/admin.profile'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminTransfersRouteImport } from './routes/admin.transfers'
+import { Route as ApplyDocumentsRouteImport } from './routes/apply.documents'
+import { Route as ApplyGeneratingRouteImport } from './routes/apply.generating'
+import { Route as ApplyHospitalRouteImport } from './routes/apply.hospital'
+import { Route as ApplyLocationRouteImport } from './routes/apply.location'
+import { Route as ApplyRegistrationRouteImport } from './routes/apply.registration'
+import { Route as ApplyReviewRouteImport } from './routes/apply.review'
+import { Route as ApplyStoryRouteImport } from './routes/apply.story'
+import { Route as ApplyStoryReviewRouteImport } from './routes/apply.story-review'
+import { Route as ApplySuccessRouteImport } from './routes/apply.success'
 import { Route as CampaignsIndexRouteImport } from './routes/campaigns.index'
 import { Route as CampaignsCampaignIdRouteImport } from './routes/campaigns.$campaignId'
 import { Route as CausesIndexRouteImport } from './routes/causes.index'
 import { Route as CausesCauseIdRouteImport } from './routes/causes.$causeId'
 import { Route as DonateCampaignIdRouteImport } from './routes/donate.$campaignId'
+import { Route as PortalIndexRouteImport } from './routes/portal.index'
+import { Route as PortalApplicationRouteImport } from './routes/portal.application'
+import { Route as PortalCampaignRouteImport } from './routes/portal.campaign'
+import { Route as PortalDocumentsRouteImport } from './routes/portal.documents'
+import { Route as PortalNotificationsRouteImport } from './routes/portal.notifications'
+import { Route as PortalProfileRouteImport } from './routes/portal.profile'
+import { Route as PortalSettingsRouteImport } from './routes/portal.settings'
+import { Route as PortalTreatmentRouteImport } from './routes/portal.treatment'
 import { Route as ThankYouDonationIdRouteImport } from './routes/thank-you.$donationId'
 import { Route as AuthenticatedMyImpactIndexRouteImport } from './routes/_authenticated/my-impact.index'
 import { Route as AuthenticatedMyImpactCampaignIdRouteImport } from './routes/_authenticated/my-impact.$campaignId'
@@ -47,6 +78,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApplyRoute = ApplyRouteImport.update({
@@ -89,6 +125,11 @@ const PartnerDonorRoute = PartnerDonorRouteImport.update({
   path: '/partner-donor',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -109,10 +150,115 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDonorRoute = AuthenticatedDonorRouteImport.update({
+  id: '/donor',
+  path: '/donor',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedWalletRoute = AuthenticatedWalletRouteImport.update({
   id: '/wallet',
   path: '/wallet',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminApplicationsRoute = AdminApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAuditLogsRoute = AdminAuditLogsRouteImport.update({
+  id: '/audit-logs',
+  path: '/audit-logs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCampaignsRoute = AdminCampaignsRouteImport.update({
+  id: '/campaigns',
+  path: '/campaigns',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCausesRoute = AdminCausesRouteImport.update({
+  id: '/causes',
+  path: '/causes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDonationsRoute = AdminDonationsRouteImport.update({
+  id: '/donations',
+  path: '/donations',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminHospitalsRoute = AdminHospitalsRouteImport.update({
+  id: '/hospitals',
+  path: '/hospitals',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPatientsRoute = AdminPatientsRouteImport.update({
+  id: '/patients',
+  path: '/patients',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProfileRoute = AdminProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTransfersRoute = AdminTransfersRouteImport.update({
+  id: '/transfers',
+  path: '/transfers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const ApplyDocumentsRoute = ApplyDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => ApplyRoute,
+} as any)
+const ApplyGeneratingRoute = ApplyGeneratingRouteImport.update({
+  id: '/generating',
+  path: '/generating',
+  getParentRoute: () => ApplyRoute,
+} as any)
+const ApplyHospitalRoute = ApplyHospitalRouteImport.update({
+  id: '/hospital',
+  path: '/hospital',
+  getParentRoute: () => ApplyRoute,
+} as any)
+const ApplyLocationRoute = ApplyLocationRouteImport.update({
+  id: '/location',
+  path: '/location',
+  getParentRoute: () => ApplyRoute,
+} as any)
+const ApplyRegistrationRoute = ApplyRegistrationRouteImport.update({
+  id: '/registration',
+  path: '/registration',
+  getParentRoute: () => ApplyRoute,
+} as any)
+const ApplyReviewRoute = ApplyReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => ApplyRoute,
+} as any)
+const ApplyStoryRoute = ApplyStoryRouteImport.update({
+  id: '/story',
+  path: '/story',
+  getParentRoute: () => ApplyRoute,
+} as any)
+const ApplyStoryReviewRoute = ApplyStoryReviewRouteImport.update({
+  id: '/story-review',
+  path: '/story-review',
+  getParentRoute: () => ApplyRoute,
+} as any)
+const ApplySuccessRoute = ApplySuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => ApplyRoute,
 } as any)
 const CampaignsIndexRoute = CampaignsIndexRouteImport.update({
   id: '/campaigns/',
@@ -138,6 +284,46 @@ const DonateCampaignIdRoute = DonateCampaignIdRouteImport.update({
   id: '/donate/$campaignId',
   path: '/donate/$campaignId',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PortalIndexRoute = PortalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalApplicationRoute = PortalApplicationRouteImport.update({
+  id: '/application',
+  path: '/application',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCampaignRoute = PortalCampaignRouteImport.update({
+  id: '/campaign',
+  path: '/campaign',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalDocumentsRoute = PortalDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalNotificationsRoute = PortalNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalProfileRoute = PortalProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalSettingsRoute = PortalSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalTreatmentRoute = PortalTreatmentRouteImport.update({
+  id: '/treatment',
+  path: '/treatment',
+  getParentRoute: () => PortalRoute,
 } as any)
 const ThankYouDonationIdRoute = ThankYouDonationIdRouteImport.update({
   id: '/thank-you/$donationId',
@@ -165,7 +351,8 @@ const CausesDonateCauseIdRoute = CausesDonateCauseIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/apply': typeof ApplyRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/apply': typeof ApplyRouteWithChildren
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
@@ -173,17 +360,47 @@ export interface FileRoutesByFullPath {
   '/how-it-works': typeof HowItWorksRoute
   '/login': typeof LoginRoute
   '/partner-donor': typeof PartnerDonorRoute
+  '/portal': typeof PortalRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/success-stories': typeof SuccessStoriesRoute
   '/terms': typeof TermsRoute
+  '/donor': typeof AuthenticatedDonorRoute
   '/wallet': typeof AuthenticatedWalletRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
+  '/admin/campaigns': typeof AdminCampaignsRoute
+  '/admin/causes': typeof AdminCausesRoute
+  '/admin/donations': typeof AdminDonationsRoute
+  '/admin/hospitals': typeof AdminHospitalsRoute
+  '/admin/patients': typeof AdminPatientsRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/transfers': typeof AdminTransfersRoute
+  '/apply/documents': typeof ApplyDocumentsRoute
+  '/apply/generating': typeof ApplyGeneratingRoute
+  '/apply/hospital': typeof ApplyHospitalRoute
+  '/apply/location': typeof ApplyLocationRoute
+  '/apply/registration': typeof ApplyRegistrationRoute
+  '/apply/review': typeof ApplyReviewRoute
+  '/apply/story': typeof ApplyStoryRoute
+  '/apply/story-review': typeof ApplyStoryReviewRoute
+  '/apply/success': typeof ApplySuccessRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
   '/causes/$causeId': typeof CausesCauseIdRoute
   '/donate/$campaignId': typeof DonateCampaignIdRoute
+  '/portal/application': typeof PortalApplicationRoute
+  '/portal/campaign': typeof PortalCampaignRoute
+  '/portal/documents': typeof PortalDocumentsRoute
+  '/portal/notifications': typeof PortalNotificationsRoute
+  '/portal/profile': typeof PortalProfileRoute
+  '/portal/settings': typeof PortalSettingsRoute
+  '/portal/treatment': typeof PortalTreatmentRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/campaigns/': typeof CampaignsIndexRoute
   '/causes/': typeof CausesIndexRoute
+  '/portal/': typeof PortalIndexRoute
   '/my-impact/$campaignId': typeof AuthenticatedMyImpactCampaignIdRoute
   '/causes/donate/$causeId': typeof CausesDonateCauseIdRoute
   '/my-impact/': typeof AuthenticatedMyImpactIndexRoute
@@ -191,7 +408,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/apply': typeof ApplyRoute
+  '/apply': typeof ApplyRouteWithChildren
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
@@ -203,13 +420,42 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/success-stories': typeof SuccessStoriesRoute
   '/terms': typeof TermsRoute
+  '/donor': typeof AuthenticatedDonorRoute
   '/wallet': typeof AuthenticatedWalletRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
+  '/admin/campaigns': typeof AdminCampaignsRoute
+  '/admin/causes': typeof AdminCausesRoute
+  '/admin/donations': typeof AdminDonationsRoute
+  '/admin/hospitals': typeof AdminHospitalsRoute
+  '/admin/patients': typeof AdminPatientsRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/transfers': typeof AdminTransfersRoute
+  '/apply/documents': typeof ApplyDocumentsRoute
+  '/apply/generating': typeof ApplyGeneratingRoute
+  '/apply/hospital': typeof ApplyHospitalRoute
+  '/apply/location': typeof ApplyLocationRoute
+  '/apply/registration': typeof ApplyRegistrationRoute
+  '/apply/review': typeof ApplyReviewRoute
+  '/apply/story': typeof ApplyStoryRoute
+  '/apply/story-review': typeof ApplyStoryReviewRoute
+  '/apply/success': typeof ApplySuccessRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
   '/causes/$causeId': typeof CausesCauseIdRoute
   '/donate/$campaignId': typeof DonateCampaignIdRoute
+  '/portal/application': typeof PortalApplicationRoute
+  '/portal/campaign': typeof PortalCampaignRoute
+  '/portal/documents': typeof PortalDocumentsRoute
+  '/portal/notifications': typeof PortalNotificationsRoute
+  '/portal/profile': typeof PortalProfileRoute
+  '/portal/settings': typeof PortalSettingsRoute
+  '/portal/treatment': typeof PortalTreatmentRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
+  '/admin': typeof AdminIndexRoute
   '/campaigns': typeof CampaignsIndexRoute
   '/causes': typeof CausesIndexRoute
+  '/portal': typeof PortalIndexRoute
   '/my-impact/$campaignId': typeof AuthenticatedMyImpactCampaignIdRoute
   '/causes/donate/$causeId': typeof CausesDonateCauseIdRoute
   '/my-impact': typeof AuthenticatedMyImpactIndexRoute
@@ -219,7 +465,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
-  '/apply': typeof ApplyRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/apply': typeof ApplyRouteWithChildren
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/faqs': typeof FaqsRoute
@@ -227,17 +474,47 @@ export interface FileRoutesById {
   '/how-it-works': typeof HowItWorksRoute
   '/login': typeof LoginRoute
   '/partner-donor': typeof PartnerDonorRoute
+  '/portal': typeof PortalRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/success-stories': typeof SuccessStoriesRoute
   '/terms': typeof TermsRoute
+  '/_authenticated/donor': typeof AuthenticatedDonorRoute
   '/_authenticated/wallet': typeof AuthenticatedWalletRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/audit-logs': typeof AdminAuditLogsRoute
+  '/admin/campaigns': typeof AdminCampaignsRoute
+  '/admin/causes': typeof AdminCausesRoute
+  '/admin/donations': typeof AdminDonationsRoute
+  '/admin/hospitals': typeof AdminHospitalsRoute
+  '/admin/patients': typeof AdminPatientsRoute
+  '/admin/profile': typeof AdminProfileRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/transfers': typeof AdminTransfersRoute
+  '/apply/documents': typeof ApplyDocumentsRoute
+  '/apply/generating': typeof ApplyGeneratingRoute
+  '/apply/hospital': typeof ApplyHospitalRoute
+  '/apply/location': typeof ApplyLocationRoute
+  '/apply/registration': typeof ApplyRegistrationRoute
+  '/apply/review': typeof ApplyReviewRoute
+  '/apply/story': typeof ApplyStoryRoute
+  '/apply/story-review': typeof ApplyStoryReviewRoute
+  '/apply/success': typeof ApplySuccessRoute
   '/campaigns/$campaignId': typeof CampaignsCampaignIdRoute
   '/causes/$causeId': typeof CausesCauseIdRoute
   '/donate/$campaignId': typeof DonateCampaignIdRoute
+  '/portal/application': typeof PortalApplicationRoute
+  '/portal/campaign': typeof PortalCampaignRoute
+  '/portal/documents': typeof PortalDocumentsRoute
+  '/portal/notifications': typeof PortalNotificationsRoute
+  '/portal/profile': typeof PortalProfileRoute
+  '/portal/settings': typeof PortalSettingsRoute
+  '/portal/treatment': typeof PortalTreatmentRoute
   '/thank-you/$donationId': typeof ThankYouDonationIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/campaigns/': typeof CampaignsIndexRoute
   '/causes/': typeof CausesIndexRoute
+  '/portal/': typeof PortalIndexRoute
   '/_authenticated/my-impact/$campaignId': typeof AuthenticatedMyImpactCampaignIdRoute
   '/causes/donate/$causeId': typeof CausesDonateCauseIdRoute
   '/_authenticated/my-impact/': typeof AuthenticatedMyImpactIndexRoute
@@ -247,6 +524,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/apply'
     | '/auth'
     | '/contact'
@@ -255,17 +533,47 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/login'
     | '/partner-donor'
+    | '/portal'
     | '/privacy'
     | '/register'
     | '/success-stories'
     | '/terms'
+    | '/donor'
     | '/wallet'
+    | '/admin/applications'
+    | '/admin/audit-logs'
+    | '/admin/campaigns'
+    | '/admin/causes'
+    | '/admin/donations'
+    | '/admin/hospitals'
+    | '/admin/patients'
+    | '/admin/profile'
+    | '/admin/settings'
+    | '/admin/transfers'
+    | '/apply/documents'
+    | '/apply/generating'
+    | '/apply/hospital'
+    | '/apply/location'
+    | '/apply/registration'
+    | '/apply/review'
+    | '/apply/story'
+    | '/apply/story-review'
+    | '/apply/success'
     | '/campaigns/$campaignId'
     | '/causes/$causeId'
     | '/donate/$campaignId'
+    | '/portal/application'
+    | '/portal/campaign'
+    | '/portal/documents'
+    | '/portal/notifications'
+    | '/portal/profile'
+    | '/portal/settings'
+    | '/portal/treatment'
     | '/thank-you/$donationId'
+    | '/admin/'
     | '/campaigns/'
     | '/causes/'
+    | '/portal/'
     | '/my-impact/$campaignId'
     | '/causes/donate/$causeId'
     | '/my-impact/'
@@ -285,13 +593,42 @@ export interface FileRouteTypes {
     | '/register'
     | '/success-stories'
     | '/terms'
+    | '/donor'
     | '/wallet'
+    | '/admin/applications'
+    | '/admin/audit-logs'
+    | '/admin/campaigns'
+    | '/admin/causes'
+    | '/admin/donations'
+    | '/admin/hospitals'
+    | '/admin/patients'
+    | '/admin/profile'
+    | '/admin/settings'
+    | '/admin/transfers'
+    | '/apply/documents'
+    | '/apply/generating'
+    | '/apply/hospital'
+    | '/apply/location'
+    | '/apply/registration'
+    | '/apply/review'
+    | '/apply/story'
+    | '/apply/story-review'
+    | '/apply/success'
     | '/campaigns/$campaignId'
     | '/causes/$causeId'
     | '/donate/$campaignId'
+    | '/portal/application'
+    | '/portal/campaign'
+    | '/portal/documents'
+    | '/portal/notifications'
+    | '/portal/profile'
+    | '/portal/settings'
+    | '/portal/treatment'
     | '/thank-you/$donationId'
+    | '/admin'
     | '/campaigns'
     | '/causes'
+    | '/portal'
     | '/my-impact/$campaignId'
     | '/causes/donate/$causeId'
     | '/my-impact'
@@ -300,6 +637,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/about'
+    | '/admin'
     | '/apply'
     | '/auth'
     | '/contact'
@@ -308,17 +646,47 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/login'
     | '/partner-donor'
+    | '/portal'
     | '/privacy'
     | '/register'
     | '/success-stories'
     | '/terms'
+    | '/_authenticated/donor'
     | '/_authenticated/wallet'
+    | '/admin/applications'
+    | '/admin/audit-logs'
+    | '/admin/campaigns'
+    | '/admin/causes'
+    | '/admin/donations'
+    | '/admin/hospitals'
+    | '/admin/patients'
+    | '/admin/profile'
+    | '/admin/settings'
+    | '/admin/transfers'
+    | '/apply/documents'
+    | '/apply/generating'
+    | '/apply/hospital'
+    | '/apply/location'
+    | '/apply/registration'
+    | '/apply/review'
+    | '/apply/story'
+    | '/apply/story-review'
+    | '/apply/success'
     | '/campaigns/$campaignId'
     | '/causes/$causeId'
     | '/donate/$campaignId'
+    | '/portal/application'
+    | '/portal/campaign'
+    | '/portal/documents'
+    | '/portal/notifications'
+    | '/portal/profile'
+    | '/portal/settings'
+    | '/portal/treatment'
     | '/thank-you/$donationId'
+    | '/admin/'
     | '/campaigns/'
     | '/causes/'
+    | '/portal/'
     | '/_authenticated/my-impact/$campaignId'
     | '/causes/donate/$causeId'
     | '/_authenticated/my-impact/'
@@ -328,7 +696,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
-  ApplyRoute: typeof ApplyRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  ApplyRoute: typeof ApplyRouteWithChildren
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   FaqsRoute: typeof FaqsRoute
@@ -336,6 +705,7 @@ export interface RootRouteChildren {
   HowItWorksRoute: typeof HowItWorksRoute
   LoginRoute: typeof LoginRoute
   PartnerDonorRoute: typeof PartnerDonorRoute
+  PortalRoute: typeof PortalRouteWithChildren
   PrivacyRoute: typeof PrivacyRoute
   RegisterRoute: typeof RegisterRoute
   SuccessStoriesRoute: typeof SuccessStoriesRoute
@@ -370,6 +740,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apply': {
@@ -428,6 +805,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartnerDonorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -456,12 +840,159 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/donor': {
+      id: '/_authenticated/donor'
+      path: '/donor'
+      fullPath: '/donor'
+      preLoaderRoute: typeof AuthenticatedDonorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/wallet': {
       id: '/_authenticated/wallet'
       path: '/wallet'
       fullPath: '/wallet'
       preLoaderRoute: typeof AuthenticatedWalletRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/applications': {
+      id: '/admin/applications'
+      path: '/applications'
+      fullPath: '/admin/applications'
+      preLoaderRoute: typeof AdminApplicationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/audit-logs': {
+      id: '/admin/audit-logs'
+      path: '/audit-logs'
+      fullPath: '/admin/audit-logs'
+      preLoaderRoute: typeof AdminAuditLogsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/campaigns': {
+      id: '/admin/campaigns'
+      path: '/campaigns'
+      fullPath: '/admin/campaigns'
+      preLoaderRoute: typeof AdminCampaignsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/causes': {
+      id: '/admin/causes'
+      path: '/causes'
+      fullPath: '/admin/causes'
+      preLoaderRoute: typeof AdminCausesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/donations': {
+      id: '/admin/donations'
+      path: '/donations'
+      fullPath: '/admin/donations'
+      preLoaderRoute: typeof AdminDonationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/hospitals': {
+      id: '/admin/hospitals'
+      path: '/hospitals'
+      fullPath: '/admin/hospitals'
+      preLoaderRoute: typeof AdminHospitalsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/patients': {
+      id: '/admin/patients'
+      path: '/patients'
+      fullPath: '/admin/patients'
+      preLoaderRoute: typeof AdminPatientsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/profile': {
+      id: '/admin/profile'
+      path: '/profile'
+      fullPath: '/admin/profile'
+      preLoaderRoute: typeof AdminProfileRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/transfers': {
+      id: '/admin/transfers'
+      path: '/transfers'
+      fullPath: '/admin/transfers'
+      preLoaderRoute: typeof AdminTransfersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/apply/documents': {
+      id: '/apply/documents'
+      path: '/documents'
+      fullPath: '/apply/documents'
+      preLoaderRoute: typeof ApplyDocumentsRouteImport
+      parentRoute: typeof ApplyRoute
+    }
+    '/apply/generating': {
+      id: '/apply/generating'
+      path: '/generating'
+      fullPath: '/apply/generating'
+      preLoaderRoute: typeof ApplyGeneratingRouteImport
+      parentRoute: typeof ApplyRoute
+    }
+    '/apply/hospital': {
+      id: '/apply/hospital'
+      path: '/hospital'
+      fullPath: '/apply/hospital'
+      preLoaderRoute: typeof ApplyHospitalRouteImport
+      parentRoute: typeof ApplyRoute
+    }
+    '/apply/location': {
+      id: '/apply/location'
+      path: '/location'
+      fullPath: '/apply/location'
+      preLoaderRoute: typeof ApplyLocationRouteImport
+      parentRoute: typeof ApplyRoute
+    }
+    '/apply/registration': {
+      id: '/apply/registration'
+      path: '/registration'
+      fullPath: '/apply/registration'
+      preLoaderRoute: typeof ApplyRegistrationRouteImport
+      parentRoute: typeof ApplyRoute
+    }
+    '/apply/review': {
+      id: '/apply/review'
+      path: '/review'
+      fullPath: '/apply/review'
+      preLoaderRoute: typeof ApplyReviewRouteImport
+      parentRoute: typeof ApplyRoute
+    }
+    '/apply/story': {
+      id: '/apply/story'
+      path: '/story'
+      fullPath: '/apply/story'
+      preLoaderRoute: typeof ApplyStoryRouteImport
+      parentRoute: typeof ApplyRoute
+    }
+    '/apply/story-review': {
+      id: '/apply/story-review'
+      path: '/story-review'
+      fullPath: '/apply/story-review'
+      preLoaderRoute: typeof ApplyStoryReviewRouteImport
+      parentRoute: typeof ApplyRoute
+    }
+    '/apply/success': {
+      id: '/apply/success'
+      path: '/success'
+      fullPath: '/apply/success'
+      preLoaderRoute: typeof ApplySuccessRouteImport
+      parentRoute: typeof ApplyRoute
     }
     '/campaigns/': {
       id: '/campaigns/'
@@ -498,6 +1029,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DonateCampaignIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal/': {
+      id: '/portal/'
+      path: '/'
+      fullPath: '/portal/'
+      preLoaderRoute: typeof PortalIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/application': {
+      id: '/portal/application'
+      path: '/application'
+      fullPath: '/portal/application'
+      preLoaderRoute: typeof PortalApplicationRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/campaign': {
+      id: '/portal/campaign'
+      path: '/campaign'
+      fullPath: '/portal/campaign'
+      preLoaderRoute: typeof PortalCampaignRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/documents': {
+      id: '/portal/documents'
+      path: '/documents'
+      fullPath: '/portal/documents'
+      preLoaderRoute: typeof PortalDocumentsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/notifications': {
+      id: '/portal/notifications'
+      path: '/notifications'
+      fullPath: '/portal/notifications'
+      preLoaderRoute: typeof PortalNotificationsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/profile': {
+      id: '/portal/profile'
+      path: '/profile'
+      fullPath: '/portal/profile'
+      preLoaderRoute: typeof PortalProfileRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/settings': {
+      id: '/portal/settings'
+      path: '/settings'
+      fullPath: '/portal/settings'
+      preLoaderRoute: typeof PortalSettingsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/treatment': {
+      id: '/portal/treatment'
+      path: '/treatment'
+      fullPath: '/portal/treatment'
+      preLoaderRoute: typeof PortalTreatmentRouteImport
+      parentRoute: typeof PortalRoute
+    }
     '/thank-you/$donationId': {
       id: '/thank-you/$donationId'
       path: '/thank-you/$donationId'
@@ -530,12 +1117,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDonorRoute: typeof AuthenticatedDonorRoute
   AuthenticatedWalletRoute: typeof AuthenticatedWalletRoute
   AuthenticatedMyImpactCampaignIdRoute: typeof AuthenticatedMyImpactCampaignIdRoute
   AuthenticatedMyImpactIndexRoute: typeof AuthenticatedMyImpactIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDonorRoute: AuthenticatedDonorRoute,
   AuthenticatedWalletRoute: AuthenticatedWalletRoute,
   AuthenticatedMyImpactCampaignIdRoute: AuthenticatedMyImpactCampaignIdRoute,
   AuthenticatedMyImpactIndexRoute: AuthenticatedMyImpactIndexRoute,
@@ -544,11 +1133,93 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface AdminRouteChildren {
+  AdminApplicationsRoute: typeof AdminApplicationsRoute
+  AdminAuditLogsRoute: typeof AdminAuditLogsRoute
+  AdminCampaignsRoute: typeof AdminCampaignsRoute
+  AdminCausesRoute: typeof AdminCausesRoute
+  AdminDonationsRoute: typeof AdminDonationsRoute
+  AdminHospitalsRoute: typeof AdminHospitalsRoute
+  AdminPatientsRoute: typeof AdminPatientsRoute
+  AdminProfileRoute: typeof AdminProfileRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminTransfersRoute: typeof AdminTransfersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminApplicationsRoute: AdminApplicationsRoute,
+  AdminAuditLogsRoute: AdminAuditLogsRoute,
+  AdminCampaignsRoute: AdminCampaignsRoute,
+  AdminCausesRoute: AdminCausesRoute,
+  AdminDonationsRoute: AdminDonationsRoute,
+  AdminHospitalsRoute: AdminHospitalsRoute,
+  AdminPatientsRoute: AdminPatientsRoute,
+  AdminProfileRoute: AdminProfileRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminTransfersRoute: AdminTransfersRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface ApplyRouteChildren {
+  ApplyDocumentsRoute: typeof ApplyDocumentsRoute
+  ApplyGeneratingRoute: typeof ApplyGeneratingRoute
+  ApplyHospitalRoute: typeof ApplyHospitalRoute
+  ApplyLocationRoute: typeof ApplyLocationRoute
+  ApplyRegistrationRoute: typeof ApplyRegistrationRoute
+  ApplyReviewRoute: typeof ApplyReviewRoute
+  ApplyStoryRoute: typeof ApplyStoryRoute
+  ApplyStoryReviewRoute: typeof ApplyStoryReviewRoute
+  ApplySuccessRoute: typeof ApplySuccessRoute
+}
+
+const ApplyRouteChildren: ApplyRouteChildren = {
+  ApplyDocumentsRoute: ApplyDocumentsRoute,
+  ApplyGeneratingRoute: ApplyGeneratingRoute,
+  ApplyHospitalRoute: ApplyHospitalRoute,
+  ApplyLocationRoute: ApplyLocationRoute,
+  ApplyRegistrationRoute: ApplyRegistrationRoute,
+  ApplyReviewRoute: ApplyReviewRoute,
+  ApplyStoryRoute: ApplyStoryRoute,
+  ApplyStoryReviewRoute: ApplyStoryReviewRoute,
+  ApplySuccessRoute: ApplySuccessRoute,
+}
+
+const ApplyRouteWithChildren = ApplyRoute._addFileChildren(ApplyRouteChildren)
+
+interface PortalRouteChildren {
+  PortalApplicationRoute: typeof PortalApplicationRoute
+  PortalCampaignRoute: typeof PortalCampaignRoute
+  PortalDocumentsRoute: typeof PortalDocumentsRoute
+  PortalNotificationsRoute: typeof PortalNotificationsRoute
+  PortalProfileRoute: typeof PortalProfileRoute
+  PortalSettingsRoute: typeof PortalSettingsRoute
+  PortalTreatmentRoute: typeof PortalTreatmentRoute
+  PortalIndexRoute: typeof PortalIndexRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalApplicationRoute: PortalApplicationRoute,
+  PortalCampaignRoute: PortalCampaignRoute,
+  PortalDocumentsRoute: PortalDocumentsRoute,
+  PortalNotificationsRoute: PortalNotificationsRoute,
+  PortalProfileRoute: PortalProfileRoute,
+  PortalSettingsRoute: PortalSettingsRoute,
+  PortalTreatmentRoute: PortalTreatmentRoute,
+  PortalIndexRoute: PortalIndexRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
-  ApplyRoute: ApplyRoute,
+  AdminRoute: AdminRouteWithChildren,
+  ApplyRoute: ApplyRouteWithChildren,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   FaqsRoute: FaqsRoute,
@@ -556,6 +1227,7 @@ const rootRouteChildren: RootRouteChildren = {
   HowItWorksRoute: HowItWorksRoute,
   LoginRoute: LoginRoute,
   PartnerDonorRoute: PartnerDonorRoute,
+  PortalRoute: PortalRouteWithChildren,
   PrivacyRoute: PrivacyRoute,
   RegisterRoute: RegisterRoute,
   SuccessStoriesRoute: SuccessStoriesRoute,

@@ -33,10 +33,7 @@ mock.module("@/integrations/supabase/client", () => ({
 const { hasOngoingCampaign, openPatientPortal, PATIENT_PORTAL_URL } = await import("./patient-portal");
 
 const previousWindow = globalThis.window;
-let opened;
-let tabs;
 let assigned;
-let allowPopup;
 
 beforeEach(() => {
   user = { id: "current-account" };
@@ -49,18 +46,8 @@ beforeEach(() => {
     expires_in: 3600,
     expires_at: 1760000000,
   };
-  opened = [];
-  tabs = [];
   assigned = [];
-  allowPopup = true;
   globalThis.window = {
-    open: (url, target) => {
-      opened.push([url, target]);
-      if (!allowPopup) return null;
-      const tab = { opener: "linked-to-this-page" };
-      tabs.push(tab);
-      return tab;
-    },
     location: { assign: (url) => assigned.push(url) },
   };
 });
@@ -95,43 +82,10 @@ describe("patient dashboard eligibility", () => {
   });
 });
 
-describe("patient portal handoff", () => {
-  test("opens the portal in a new tab instead of this one", async () => {
+describe("merged patient portal navigation", () => {
+  test("navigates internally to /portal without external URL token leaks", async () => {
+    expect(PATIENT_PORTAL_URL).toBe("/portal");
     expect(await openPatientPortal()).toBe(true);
-    expect(opened).toHaveLength(1);
-    expect(opened[0][1]).toBe("_blank");
-    expect(assigned).toHaveLength(0);
-  });
-
-  test("hands the session over in the URL fragment, never a query string", async () => {
-    await openPatientPortal();
-    const url = opened[0][0];
-    expect(url.startsWith(`${PATIENT_PORTAL_URL}/portal#`)).toBe(true);
-    const params = new URLSearchParams(url.slice(url.indexOf("#") + 1));
-    expect(params.get("access_token")).toBe("access-token-1");
-    expect(params.get("refresh_token")).toBe("refresh-token-1");
-    expect(params.get("token_type")).toBe("bearer");
-    expect(url).not.toContain("?access_token");
-  });
-
-  test("detaches the new tab so it cannot drive this page", async () => {
-    await openPatientPortal();
-    expect(tabs).toHaveLength(1);
-    expect(tabs[0].opener).toBeNull();
-  });
-
-  test("uses this tab when the browser blocks the new one", async () => {
-    allowPopup = false;
-    expect(await openPatientPortal()).toBe(true);
-    expect(opened).toHaveLength(1);
-    expect(assigned).toHaveLength(1);
-    expect(assigned[0].startsWith(`${PATIENT_PORTAL_URL}/portal#`)).toBe(true);
-  });
-
-  test("does nothing without a signed-in session", async () => {
-    session = null;
-    expect(await openPatientPortal()).toBe(false);
-    expect(opened).toHaveLength(0);
-    expect(assigned).toHaveLength(0);
+    expect(assigned).toContain("/portal");
   });
 });
