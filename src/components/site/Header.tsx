@@ -11,7 +11,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const { signedIn, user } = useAuth();
+  const { signedIn, user, isAdmin } = useAuth();
   const [isPatient, setIsPatient] = useState(false);
   const { primary: primaryLinks, more: moreLinks } = getSiteNavigation(signedIn);
 
@@ -63,6 +63,20 @@ export function Header() {
         <div className="hidden shrink-0 items-center gap-1 whitespace-nowrap xl:flex">
           {signedIn ? (
             <>
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className="rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+                >
+                  Admin Hub
+                </Link>
+              )}
+              <Link
+                to="/donor"
+                className="px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:text-primary"
+              >
+                Donor Hub
+              </Link>
               <Link
                 to="/wallet"
                 className="px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:text-primary"
@@ -123,6 +137,22 @@ export function Header() {
             <Link to="/my-impact" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-accent">My Impact</Link>
             {signedIn ? (
               <>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setOpen(false)}
+                    className="rounded-lg bg-primary/10 px-3 py-2.5 text-sm font-bold uppercase tracking-wider text-primary hover:bg-primary/20"
+                  >
+                    Admin Hub
+                  </Link>
+                )}
+                <Link
+                  to="/donor"
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-accent"
+                >
+                  Donor Hub
+                </Link>
                 <Link
                   to="/wallet"
                   onClick={() => setOpen(false)}

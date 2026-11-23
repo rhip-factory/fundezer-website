@@ -8,10 +8,18 @@ const columns = [
       { to: "/campaigns", label: "Browse campaigns" },
       { to: "/causes", label: "Support a Cause" },
       { to: "/how-it-works", label: "How it works" },
-      { to: "/apply", label: "Start a Campaign" },
       { to: "/hospitals", label: "Partner hospitals" },
       { to: "/partner-donor", label: "Partner Donors" },
-
+    ],
+  },
+  {
+    title: "Portals",
+    links: [
+      { to: "/apply", label: "Apply for Care" },
+      { to: "/portal", label: "Patient Portal" },
+      { to: "/donor", label: "Donor Hub" },
+      { to: "/wallet", label: "Donor Wallet" },
+      { to: "/admin", label: "Admin Hub" },
     ],
   },
   {
@@ -37,7 +45,7 @@ const columns = [
 export function Footer() {
   return (
     <footer className="mt-24 border-t-4 border-primary bg-foreground text-background">
-      <div className="container-page grid gap-12 py-16 md:grid-cols-[1.5fr_1fr_1fr_1fr] md:py-20">
+      <div className="container-page grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_1fr] md:py-20">
         <div>
           <Logo />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-background/65">

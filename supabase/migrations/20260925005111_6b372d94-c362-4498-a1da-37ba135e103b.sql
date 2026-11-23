@@ -1,0 +1,1 @@
+DELETE FROM public.user_roles WHERE user_id NOT IN (SELECT id FROM auth.users); INSERT INTO public.user_roles (user_id, role) VALUES ('3d4df893-efb3-4d0e-9a3c-a47425b9b60d', 'platform_administrator') ON CONFLICT DO NOTHING;

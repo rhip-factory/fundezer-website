@@ -1,7 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
-/** Stable address of the separate FundEzer Patient Portal app (shares this backend). */
-export const PATIENT_PORTAL_URL = "https://fundezer-patient-portal.lovable.app";
+/** Internal unified route for the merged FundEzer Patient Portal. */
+export const PATIENT_PORTAL_URL = "/portal";
 
 /** Campaign statuses that count as "ongoing" for routing a patient to their dashboard. */
 export const ONGOING_CAMPAIGN_STATUSES = ["Draft", "Under Review", "Active"] as const;
@@ -26,36 +26,13 @@ export async function hasOngoingCampaign(): Promise<boolean> {
 }
 
 /**
- * Opens the patient portal already signed in by handing the current session
- * over in the URL fragment (never sent to servers); the portal's client picks it up on load.
- *
- * The portal is a separate site, so it opens in a new top-level tab: a same-tab
- * cross-origin jump is refused inside the preview iframe (it answers 403
- * Forbidden), a new tab is not.
- *
- * "noopener,noreferrer" is deliberately NOT passed to window.open — browsers
- * then return null even when the tab opened fine, which would make popup-block
- * detection impossible. Clearing `opener` on the returned tab gives the same
- * isolation, so a blocked popup can still fall back to this tab.
+ * Navigates directly to the internal merged patient portal (/portal).
+ * No external tabs or URL token fragments required.
  */
 export async function openPatientPortal(): Promise<boolean> {
-  const { data } = await supabase.auth.getSession();
-  const s = data.session;
-  if (!s) return false;
-  const params = new URLSearchParams({
-    access_token: s.access_token,
-    refresh_token: s.refresh_token,
-    expires_in: String(s.expires_in ?? 3600),
-    expires_at: String(s.expires_at ?? ""),
-    token_type: "bearer",
-    type: "magiclink",
-  });
-  const url = `${PATIENT_PORTAL_URL}/portal#${params.toString()}`;
-  const tab = window.open(url, "_blank");
-  if (tab) {
-    tab.opener = null;
+  if (typeof window !== "undefined") {
+    window.location.assign("/portal");
     return true;
   }
-  window.location.assign(url);
-  return true;
+  return false;
 }
